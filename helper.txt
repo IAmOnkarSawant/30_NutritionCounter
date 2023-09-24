@@ -6,4 +6,3 @@
 6> git fetch origin
    enter credentials to continue
 7> git branch -r -> (able to see main branch)
-8> 
