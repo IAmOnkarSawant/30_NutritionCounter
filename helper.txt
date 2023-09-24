@@ -1,3 +1,5 @@
+First time initialization
+
 1> go to folder where you cloned project
 2> git init
 3> git remote -v
@@ -6,4 +8,4 @@
 6> git fetch origin
    enter credentials to continue
 7> git branch -r -> (able to see main branch)
-8> 
+8> git pull origin main
