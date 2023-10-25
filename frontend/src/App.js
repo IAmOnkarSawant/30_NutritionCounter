@@ -5,6 +5,9 @@ import Login from './pages/Login'
 import Signup from './pages/SignUp'
 import Navbar from './components/Navbar'
 import Test from './pages/test'
+import Album from './pages/Album';
+import Start from './pages/Start'; // Import the Start component
+
 
 function App() {
   const { user } = useAuthContext()
@@ -28,6 +31,16 @@ function App() {
             <Route 
               path="/signup" 
               element={!user ? <Signup /> : <Navigate to="/" />} 
+            />
+            <Route 
+              path="/album" 
+              element={<Album/>} 
+            />
+
+              <Route 
+              path="/start" 
+              element={<Start/>}  
+
             />
           </Routes>
         </div>
