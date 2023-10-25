@@ -9,10 +9,12 @@ First time initialization
    enter credentials to continue
 7> git branch -r -> (able to see main branch)
 
-for usage of Material UI 
-go to frontend folder
-> npm install @mui/material @emotion/react @emotion/styled
-> npm install @mui/material @mui/styled-engine-sc styled-components
 
-and do 
->npm install
+=============================================================
+||   when you want to extract all dependencies into file   ||
+||                                                         ||
+||   > npm list --depth=0 --json > dependencies.json       ||
+||   > npm init --yes                                      ||
+||                                                         ||
+=============================================================
+
