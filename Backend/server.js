@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
-const chatRoutes = require("./Routes/chat");
+const homeRoutes = require("./Routes/home");
 const userRoutes = require("./Routes/userControl");
 
 // express app
@@ -17,12 +17,12 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use("/api/chat", chatRoutes);
+app.use("/api/home", homeRoutes);
 app.use("/api/user", userRoutes);
 
 //mongoose connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/ChatGpt", {
+  .connect("mongodb://127.0.0.1:27017/SSD_PROJECT", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
