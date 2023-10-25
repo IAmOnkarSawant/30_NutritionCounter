@@ -1,6 +1,7 @@
 :root {
   --primary: #ac21da;
   --error: #e7195a;
+  --onkar: #590561;
 }
 body {
   background: #f1f1f1;
@@ -42,16 +43,17 @@ header h1 {
 nav {
   display: flex;
   align-items: center;
+  
 }
 
-nav a {
+/* nav a {
   margin-left: 20px;
   text-decoration: none;
   color: #fff;
   font-weight: bold;
-}
+} */
 
-nav button {
+/* nav button {
   background: transparent;
   border: 2px solid #fff;
   color: #fff;
@@ -59,7 +61,7 @@ nav button {
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
-}
+} */
 
 .pages {
   max-width: 1400px;
@@ -200,9 +202,9 @@ nav a {
 }
 
 nav button {
-  background: #fff;
-  color: var(--primary);
-  border: 2px solid var(--primary);
+  background: hsl(0, 0%, 100%);
+  color: var(--onkar);
+  border: 2px solid var(--onkar);
   padding: 6px 10px;
   border-radius: 4px;
   font-family: "Poppins";
