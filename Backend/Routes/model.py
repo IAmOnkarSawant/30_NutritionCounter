@@ -25,7 +25,12 @@ if os.path.isfile(image_path):
     if image is not None:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         text = pytesseract.image_to_string(gray)
-        print(text)
+        lines = text.split(',')
+        cleaned_list = [s.replace('\n', '') for s in lines]
+        cleaned_list = [line.strip() for line in cleaned_list if line.strip()]
+        formatted_text = '\n'.join(cleaned_list)
+        print(formatted_text)
+
     else:
         print("Failed to load the image.")
 else:
