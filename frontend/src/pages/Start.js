@@ -1,5 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { Button, Typography, Container, Card, CardActions, CardContent, CardMedia, Input, InputLabel } from '@mui/material';
+import {
+  Button,
+  Typography,
+  Container,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Input,
+  InputLabel,
+} from '@mui/material';
 import { PhotoCamera, CloudUpload, GetApp, Videocam } from '@mui/icons-material';
 
 const Start = () => {
@@ -8,6 +18,7 @@ const Start = () => {
   const inputRef = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
   const [imageData, setImageData] = useState(null);
+  const [mode, setMode] = useState('initial'); // 'initial', 'ingredients', 'table'
 
   const startRecording = async () => {
     if (imageData) {
@@ -55,87 +66,113 @@ const Start = () => {
     a.click();
   };
 
+  const handleButtonClick = (selectedMode) => {
+    setMode(selectedMode);
+  };
+
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" align="center" gutterBottom>
-        Camera App
+      <Typography variant="h4" align="center" gutterBottom style={{ marginTop: '20px', fontWeight: 'bold', color: 'black' }}>
+        {mode === 'initial' && (
+          <>
+            <span role="img" aria-label="camera-icon" style={{ marginRight: '10px' }}>
+              📸
+            </span>
+            Select One
+          </>
+        )}
+        {mode !== 'initial' && 'Camera App'}
       </Typography>
-      <Card>
-        <CardContent>
-          <CardMedia
-            component="video"
-            ref={videoRef}
-            autoPlay
-            height="360"
-          />
-          <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480" />
-        </CardContent>
-        <CardActions>
-          <InputLabel htmlFor="image-upload" style={{ width: '100%' }}>
-            <Input
-              accept="image/*"
-              id="image-upload"
-              type="file"
-              inputRef={inputRef}
-              style={{ display: 'none' }}
-              onChange={handleImageUpload}
-            />
+      {mode === 'initial' && (
+        <Card>
+          <CardContent style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               variant="contained"
               color="primary"
-              startIcon={<CloudUpload />}
-              component="span"
-              fullWidth
+              onClick={() => handleButtonClick('ingredients')}
+              style={{ width: '48%' }}
             >
-              Choose Image
+              Ingredients
             </Button>
-          </InputLabel>
-          {isRecording ? (
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<PhotoCamera />}
-              onClick={stopRecording}
-              fullWidth
-            >
-              Capture Image
-            </Button>
-          ) : (
             <Button
               variant="contained"
               color="primary"
-              startIcon={<Videocam />}
-              onClick={startRecording}
-              fullWidth
+              onClick={() => handleButtonClick('table')}
+              style={{ width: '48%' }}
             >
-              Start Camera
+              Table
             </Button>
-          )}
-        </CardActions>
-        {imageData && (
-          <CardContent>
-            <CardMedia
-              component="img"
-              src={imageData}
-              alt="Captured"
-              style={{ width: '100%' }}
-            />
           </CardContent>
-        )}
-        {imageData && (
+        </Card>
+      )}
+      {(mode === 'ingredients' || mode === 'table') && (
+        <Card>
+          <CardContent>
+            <CardMedia component="video" ref={videoRef} autoPlay height="360" />
+            <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480" />
+          </CardContent>
           <CardActions>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<GetApp />}
-              onClick={downloadImage}
-              fullWidth
-            >
-              Upload Image
-            </Button>
+            <InputLabel htmlFor="image-upload" style={{ width: '100%' }}>
+              <Input
+                accept="image/*"
+                id="image-upload"
+                type="file"
+                inputRef={inputRef}
+                style={{ display: 'none' }}
+                onChange={handleImageUpload}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<CloudUpload />}
+                component="span"
+                fullWidth
+              >
+                Choose Image
+              </Button>
+            </InputLabel>
+            {isRecording ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<PhotoCamera />}
+                onClick={stopRecording}
+                fullWidth
+              >
+                Capture Image
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<Videocam />}
+                onClick={startRecording}
+                fullWidth
+              >
+                Start Camera
+              </Button>
+            )}
           </CardActions>
-        )}
-      </Card>
+          {imageData && (
+            <CardContent>
+              <CardMedia component="img" src={imageData} alt="Captured" style={{ width: '100%' }} />
+            </CardContent>
+          )}
+          {imageData && (
+            <CardActions>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<GetApp />}
+                onClick={downloadImage}
+                fullWidth
+              >
+                Upload Image
+              </Button>
+            </CardActions>
+          )}
+        </Card>
+      )}
     </Container>
   );
 };

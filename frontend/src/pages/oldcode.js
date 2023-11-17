@@ -11,7 +11,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import CircularProgress from "@mui/material/CircularProgress";
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Slider from '@mui/material/Slider';
@@ -24,6 +23,7 @@ import fibreImage from './fiber.jpg';
 import carbsImage from './carbs.jpg';
 import { useEffect, useState } from 'react';
 
+// Add these lines at the top of your file
 const PrettoSlider = styled(Slider)(({ theme }) => ({
   color: '#52af77',
   height: 8,
@@ -150,159 +150,45 @@ const new_cards = [
   { Carbohydrates: "Carbohydrates", image: carbsImage },
 ];
 
-function Album() {
-  const [cards, setCards] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const scriptResponse = await fetch("/api/home/run-python-script");
-        const scriptData = await scriptResponse.json();
-  
-        console.log("Script data:", scriptData);
-  
-        const nutrientResponse = await fetch("/api/home/get-nutrients");
-        const nutrientData = await nutrientResponse.json();
-  
-        console.log("Nutrient data:", nutrientData);
-  
-        const mergedData = [ ...nutrientData];
-  
-        setCards(mergedData);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
-  
-    fetchData();
-  }, []);
-  
-
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
+export default function Album() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar></Toolbar>
+        <Toolbar>
+          {/* Add any app bar content if needed */}
+        </Toolbar>
       </AppBar>
       <main>
-        <Box
-          sx={{
-            bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Nutrients
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="text.secondary"
-              paragraph
-            ></Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              {/* <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button> */}
-            </Stack>
-          </Container>
-        </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
-            {Array.isArray(cards) && cards.length > 0 ? (
-              // Render cards for each nutrient
-              cards.map((card, index) => (
-                <Grid item key={index} xs={12} sm={6} md={4}>
-                  <Card
-                    sx={{
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <CardMedia
-                      component="div"
-                      sx={{
-                        // 16:9
-                        pt: "56.25%",
-                      }}
-                      image="https://source.unsplash.com/random?wallpapers"
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography variant="h5" component="h2">
-                        {console.log(card)}
-                        {!card ? "Un-identified" : card.name[0]}{" "}
-                        {/* Display the first nutrient name */}
-                      </Typography>
-                      <Typography>
-                        {generateDescription(card)}{" "}
-                        {/* Generate and display description */}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))
-            ) : (
-              <Grid item xs={12} sm={6} md={4}>
-                {/* Display a placeholder image or message for no ingredients */}
+            {cards.map((card, index) => (
+              <Grid item key={index} xs={12} sm={6} md={4}>
                 <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <CardMedia
                     component="div"
                     sx={{
-                      // 16:9
-                      pt: "56.25%",
+                      pt: '56.25%',
                     }}
-                    image="https://source.unsplash.com/random?no-ingredients"
+                    //image="https://source.unsplash.com/random?wallpapers"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="h5" component="h2" align="center">
-                      No Ingredients
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {Object.keys(card)[0]}
                     </Typography>
-                    <Typography align="center">
-                      No nutrient data available
+                    <Typography>
+                      {Object.values(card)[0]}
                     </Typography>
                   </CardContent>
                 </Card>
               </Grid>
-            )}
+            ))}
           </Grid>
         </Container>
 
+        {/* New Cards */}
         <Container sx={{ py: 8, display: 'flex', justifyContent: 'space-between' }} maxWidth="md">
           {new_cards.map((new_card, index) => (
             <Card key={index} sx={{ height: '100%', width: '23%', display: 'flex', flexDirection: 'column' }}>
@@ -321,9 +207,8 @@ function Album() {
         </Container>
       </main>
 
-
-
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+      {/* Footer */}
+      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
@@ -335,28 +220,15 @@ function Album() {
         >
           Something here to give the footer a purpose!
         </Typography>
+        <Typography variant="body2" color="text.secondary" align="center">
+          {'Copyright © '}
+          <Link color="inherit" href="https://mui.com/">
+            Your Website
+          </Link>{' '}
+          {new Date().getFullYear()}
+          {'.'}
+        </Typography>
       </Box>
     </ThemeProvider>
   );
 }
-
-function generateDescription(nutrient) {
-  const sortedKeys = Object.keys(nutrient)
-    .filter(
-      (key) =>
-        key !== "_id" &&
-        key !== "name" &&
-        key !== "serving_size" &&
-        key !== "__v"
-    )
-    .sort((a, b) => parseFloat(nutrient[b]) - parseFloat(nutrient[a]))
-    .slice(0, 5);
-
-  const description = sortedKeys
-    .map((key) => `${key}: ${nutrient[key]}`)
-    .join(", ");
-
-  return description;
-}
-
-export default Album;

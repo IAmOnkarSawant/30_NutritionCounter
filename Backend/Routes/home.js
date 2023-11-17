@@ -7,37 +7,51 @@ const { exec } = require("child_process");
 const Questions = require("../Models/questionsModel");
 const Food = require("../Models/foodModel");
 const UserDet = require("../Models/userModel");
+const NoPregnancy = require("../Models/NoPregnancyModel");
+const NoCardiac = require("../Models/NoCadiacModel");
+const NoChild = require("../Models/NoChildModel");
+const NoDiabetic = require("../Models/NoDiabeticModel");
 const requireAuth = require("../Middleware/requireAuth");
 const router = express.Router();
 let nutrients = [];
+let nutrients_details = [];
 
-// router.use(requireAuth)
 //------------------------------------------------------------
-                    // Get nutrients
+// Should I reccomend to pregnent?
 //------------------------------------------------------------
-router.get("/get-nutrients", async (req, res) => {
+router.get("/is-rec-pregnant", async (req, res) => {
   try {
-    if (nutrients.length === 0) {
-      return res.status(404).json({ error: "No nutrients found" });
+    if (!nutrients_details || nutrients_details.length === 0) {
+      return res.status(400).json({ error: "No nutrients_details found" });
     }
 
-    const top6 = []; 
-    for (const nutrient of nutrients) {
-      const foundNutrient = await Food.findOne({ name: { $in: {$toLower: [nutrient]} } });
+    let countOfIngredientsNotRecommended = 0;
 
-      if (foundNutrient) {
-        // If the nutrient is found, add it to the top6 array
-        top6.push(foundNutrient);
-      } else {
-        // If the nutrient is not found, you can handle it as needed (e.g., skip or report an error)
-        console.log(`Nutrient not found in the database: ${nutrient}`);
+    for (const nutrientDetail of nutrients_details) {
+      if (
+        !nutrientDetail ||
+        !nutrientDetail.name ||
+        !Array.isArray(nutrientDetail.name)
+      ) {
+        continue;
       }
-      if(top6.length == 6){
-        break;
+
+      for (const nameElement of nutrientDetail.name) {
+        if (!nameElement) {
+          continue;
+        }
+
+        const ingredientFound = await NoPregnancy.findOne({
+          name: { $regex: new RegExp(nameElement, "i") },
+        });
+
+        if (ingredientFound) {
+          countOfIngredientsNotRecommended++;
+        }
       }
     }
 
-    res.status(200).json(top6); // Send the top6 array containing nutrient information to the frontend
+    res.status(200).json({ count: countOfIngredientsNotRecommended });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -45,7 +59,214 @@ router.get("/get-nutrients", async (req, res) => {
 });
 
 //------------------------------------------------------------
-                    // Upload the file
+// Should I reccomend to Cardiac Patient?
+//------------------------------------------------------------
+router.get("/is-rec-cardiac", async (req, res) => {
+  try {
+    if (!nutrients_details || nutrients_details.length === 0) {
+      return res.status(400).json({ error: "No nutrients_details found" });
+    }
+
+    let countOfIngredientsNotRecommended = 0;
+
+    for (const nutrientDetail of nutrients_details) {
+      if (
+        !nutrientDetail ||
+        !nutrientDetail.name ||
+        !Array.isArray(nutrientDetail.name)
+      ) {
+        continue;
+      }
+
+      for (const nameElement of nutrientDetail.name) {
+        if (!nameElement) {
+          continue;
+        }
+
+        const ingredientFound = await NoCardiac.findOne({
+          name: { $regex: new RegExp(nameElement, "i") },
+        });
+
+        if (ingredientFound) {
+          countOfIngredientsNotRecommended++;
+        }
+      }
+    }
+
+    res.status(200).json({ count: countOfIngredientsNotRecommended });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//------------------------------------------------------------
+// Should I reccomend to child?
+//------------------------------------------------------------
+router.get("/is-rec-child", async (req, res) => {
+  try {
+    if (!nutrients_details || nutrients_details.length === 0) {
+      return res.status(400).json({ error: "No nutrients_details found" });
+    }
+
+    let countOfIngredientsNotRecommended = 0;
+
+    for (const nutrientDetail of nutrients_details) {
+      if (
+        !nutrientDetail ||
+        !nutrientDetail.name ||
+        !Array.isArray(nutrientDetail.name)
+      ) {
+        continue;
+      }
+
+      for (const nameElement of nutrientDetail.name) {
+        if (!nameElement) {
+          continue;
+        }
+
+        const ingredientFound = await NoChild.findOne({
+          name: { $regex: new RegExp(nameElement, "i") },
+        });
+
+        if (ingredientFound) {
+          countOfIngredientsNotRecommended++;
+        }
+      }
+    }
+
+    res.status(200).json({ count: countOfIngredientsNotRecommended });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//------------------------------------------------------------
+// Should I reccomend to Diabetic?
+//------------------------------------------------------------
+router.get("/is-rec-Diabetic", async (req, res) => {
+  try {
+    if (!nutrients_details || nutrients_details.length === 0) {
+      return res.status(400).json({ error: "No nutrients_details found" });
+    }
+
+    let countOfIngredientsNotRecommended = 0;
+
+    for (const nutrientDetail of nutrients_details) {
+      if (
+        !nutrientDetail ||
+        !nutrientDetail.name ||
+        !Array.isArray(nutrientDetail.name)
+      ) {
+        continue;
+      }
+
+      for (const nameElement of nutrientDetail.name) {
+        if (!nameElement) {
+          continue;
+        }
+
+        const ingredientFound = await NoDiabetic.findOne({
+          name: { $regex: new RegExp(nameElement, "i") },
+        });
+
+        if (ingredientFound) {
+          countOfIngredientsNotRecommended++;
+        }
+      }
+    }
+
+    res.status(200).json({ count: countOfIngredientsNotRecommended });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//------------------------------------------------------------
+// Get the composition of pro, fat, carb, fiber
+//------------------------------------------------------------
+router.get("/get-top4-nutrients", async (req, res) => {
+  try {
+    if (nutrients_details.length === 0) {
+      return res.status(404).json({ error: "No nutrients found" });
+    }
+
+    let proteinSum = 0;
+    let fatsSum = 0;
+    let fiberSum = 0;
+    let carbsSum = 0;
+
+    for (const nutrient of nutrients_details) {
+      if (nutrient) {
+        proteinSum += parseFloat(nutrient.protein) || 0;
+        fatsSum += parseFloat(nutrient.total_fat) || 0;
+        fiberSum += parseFloat(nutrient.fiber) || 0;
+        carbsSum += parseFloat(nutrient.carbohydrate) || 0;
+      } else {
+        console.log(`Nutrient not found in the database: ${nutrient}`);
+      }
+    }
+
+    const totalSum = proteinSum + fatsSum + fiberSum + carbsSum;
+    const weightedContribution = {
+      protein: Math.round((proteinSum / totalSum) * 100),
+      fats: Math.round((fatsSum / totalSum) * 100),
+      fiber: Math.round((fiberSum / totalSum) * 100),
+      carbs: Math.round((carbsSum / totalSum) * 100),
+    };
+
+    const adjustment =
+      100 -
+      (weightedContribution.protein +
+        weightedContribution.fats +
+        weightedContribution.fiber +
+        weightedContribution.carbs);
+    weightedContribution.protein += adjustment;
+
+    res.status(200).json(weightedContribution);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//------------------------------------------------------------
+// Getting the nutrients
+//------------------------------------------------------------
+router.get("/get-nutrients", async (req, res) => {
+  try {
+    if (nutrients.length === 0) {
+      return res.status(404).json({ error: "No nutrients found" });
+    }
+
+    const top6 = [];
+    for (const nutrient of nutrients) {
+      const cleanedNutrient = nutrient.replace(/[^A-Za-z\s]/g, "");
+      const nutrientParts = cleanedNutrient.split(" ");
+      const regexConditions = nutrientParts.map((part) => ({
+        name: { $regex: new RegExp(part, "i") },
+      }));
+
+      const foundNutrient = await Food.findOne({ $or: regexConditions });
+
+      if (foundNutrient) {
+        nutrients_details.push(foundNutrient);
+      } else {
+        console.log(`Nutrient not found in the database: ${cleanedNutrient}`);
+      }
+    }
+
+    res.status(200).json(nutrients_details.slice(0, nutrients_details.length >= 6 ? 6 : nutrients_details));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//------------------------------------------------------------
+// Upload the file
 //------------------------------------------------------------
 const storage = multer.diskStorage({
   destination: "uploads/",
@@ -74,12 +295,11 @@ router.post("/upload", upload.single("image"), (req, res) => {
 });
 
 //------------------------------------------------------------
-                  // clear uploads folder
+// clear uploads folder
 //------------------------------------------------------------
 const parentDirectory = path.join(__dirname, "..");
-const folderPath = path.join(parentDirectory, "uploads"); 
+const folderPath = path.join(parentDirectory, "uploads");
 router.get("/delete-files", (req, res) => {
-
   fs.readdir(folderPath, (err, files) => {
     if (err) {
       console.error(`Error reading directory: ${err}`);
@@ -104,13 +324,13 @@ router.get("/delete-files", (req, res) => {
 });
 
 //------------------------------------------------------------
-                  // Run the model
+// Run the model
 //------------------------------------------------------------
 router.get("/run-python-script", (req, res) => {
   let stdout = "";
   let stderr = "";
 
-  console.log(__dirname); 
+  console.log(__dirname);
   const pythonScriptPath = path.resolve(__dirname, "model.py");
   const pythonScriptCommand = `python "${pythonScriptPath}"`;
   console.log(pythonScriptCommand);
@@ -131,7 +351,7 @@ router.get("/run-python-script", (req, res) => {
 
     // Process the Python script's output and stderr
     const output = stdout.split("\n").filter(Boolean);
-    const noutput = output.map((element) => element.replace(/\r/g, ''));
+    const noutput = output.map((element) => element.replace(/\r/g, ""));
     const errorOutput = stderr.split("\n").filter(Boolean);
     nutrients = noutput;
     res.json({ noutput, errorOutput });
