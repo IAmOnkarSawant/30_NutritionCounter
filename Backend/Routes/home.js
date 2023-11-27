@@ -26,6 +26,8 @@ router.get("/is-rec-pregnant", async (req, res) => {
     }
 
     let countOfIngredientsNotRecommended = 0;
+    let ingredientsNotEat = [];
+    let ingredientsNotEatUnique;
 
     for (const nutrientDetail of nutrients_details) {
       if (
@@ -46,12 +48,15 @@ router.get("/is-rec-pregnant", async (req, res) => {
         });
 
         if (ingredientFound) {
-          countOfIngredientsNotRecommended++;
+          ingredientsNotEat.push(ingredientFound.name);
         }
       }
+      ingredientsNotEatUnique = Array.from(new Set(ingredientsNotEat));
     }
-
-    res.status(200).json({ count: countOfIngredientsNotRecommended });
+    res.status(200).json({
+      count: ingredientsNotEatUnique.length,
+      ingredients: ingredientsNotEatUnique.length > 2 ? ingredientsNotEatUnique.slice(0, 2): ingredientsNotEatUnique
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -59,7 +64,7 @@ router.get("/is-rec-pregnant", async (req, res) => {
 });
 
 //------------------------------------------------------------
-// Should I reccomend to Cardiac Patient?
+// Should I recommend to Cardiac Patient?
 //------------------------------------------------------------
 router.get("/is-rec-cardiac", async (req, res) => {
   try {
@@ -68,6 +73,8 @@ router.get("/is-rec-cardiac", async (req, res) => {
     }
 
     let countOfIngredientsNotRecommended = 0;
+    let ingredientsNotEat = [];
+    let ingredientsNotEatUnique;
 
     for (const nutrientDetail of nutrients_details) {
       if (
@@ -88,12 +95,16 @@ router.get("/is-rec-cardiac", async (req, res) => {
         });
 
         if (ingredientFound) {
-          countOfIngredientsNotRecommended++;
+          ingredientsNotEat.push(ingredientFound.name);
         }
       }
+      ingredientsNotEatUnique = Array.from(new Set(ingredientsNotEat));
     }
 
-    res.status(200).json({ count: countOfIngredientsNotRecommended });
+    res.status(200).json({
+      count: ingredientsNotEatUnique.length,
+      ingredients: ingredientsNotEatUnique.length > 2 ? ingredientsNotEatUnique.slice(0, 2): ingredientsNotEatUnique
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -101,7 +112,7 @@ router.get("/is-rec-cardiac", async (req, res) => {
 });
 
 //------------------------------------------------------------
-// Should I reccomend to child?
+// Should I recommend to Child?
 //------------------------------------------------------------
 router.get("/is-rec-child", async (req, res) => {
   try {
@@ -110,6 +121,8 @@ router.get("/is-rec-child", async (req, res) => {
     }
 
     let countOfIngredientsNotRecommended = 0;
+    let ingredientsNotEat = [];
+    let ingredientsNotEatUnique;
 
     for (const nutrientDetail of nutrients_details) {
       if (
@@ -130,12 +143,16 @@ router.get("/is-rec-child", async (req, res) => {
         });
 
         if (ingredientFound) {
-          countOfIngredientsNotRecommended++;
+          ingredientsNotEat.push(ingredientFound.name);
         }
       }
+      ingredientsNotEatUnique = Array.from(new Set(ingredientsNotEat));
     }
 
-    res.status(200).json({ count: countOfIngredientsNotRecommended });
+    res.status(200).json({
+      count: ingredientsNotEatUnique.length,
+      ingredients: ingredientsNotEatUnique.length > 2 ? ingredientsNotEatUnique.slice(0, 2): ingredientsNotEatUnique
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -143,15 +160,17 @@ router.get("/is-rec-child", async (req, res) => {
 });
 
 //------------------------------------------------------------
-// Should I reccomend to Diabetic?
+// Should I recommend to Diabetic?
 //------------------------------------------------------------
-router.get("/is-rec-Diabetic", async (req, res) => {
+router.get("/is-rec-diabetic", async (req, res) => {
   try {
     if (!nutrients_details || nutrients_details.length === 0) {
       return res.status(400).json({ error: "No nutrients_details found" });
     }
 
     let countOfIngredientsNotRecommended = 0;
+    let ingredientsNotEat = [];
+    let ingredientsNotEatUnique;
 
     for (const nutrientDetail of nutrients_details) {
       if (
@@ -172,12 +191,16 @@ router.get("/is-rec-Diabetic", async (req, res) => {
         });
 
         if (ingredientFound) {
-          countOfIngredientsNotRecommended++;
+          ingredientsNotEat.push(ingredientFound.name);
         }
       }
+      ingredientsNotEatUnique = Array.from(new Set(ingredientsNotEat));
     }
 
-    res.status(200).json({ count: countOfIngredientsNotRecommended });
+    res.status(200).json({
+      count: ingredientsNotEatUnique.length,
+      ingredients: ingredientsNotEatUnique.length > 2 ? ingredientsNotEatUnique.slice(0, 2): ingredientsNotEatUnique
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -258,7 +281,14 @@ router.get("/get-nutrients", async (req, res) => {
       }
     }
 
-    res.status(200).json(nutrients_details.slice(0, nutrients_details.length >= 6 ? 6 : nutrients_details));
+    res
+      .status(200)
+      .json(
+        nutrients_details.slice(
+          0,
+          nutrients_details.length >= 6 ? 6 : nutrients_details
+        )
+      );
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
