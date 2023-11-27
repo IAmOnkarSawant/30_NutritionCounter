@@ -23,23 +23,14 @@ import fatImage from "./fats.jpg";
 import fibreImage from "./fiber.jpg";
 import carbsImage from "./carbs.jpg";
 import { useEffect, useState } from "react";
-import SvgIcon from '@mui/material/SvgIcon';
-import pregaNews from './pregaNews.svg';
-import cardiacNews from './cardiac.svg';
-import diabetic from './Diabetic.svg';
-import child from './child.svg';
-
-const recommendedArray = [
-  'Include a variety of fruits and vegetables in your diet.',
-  'Drink plenty of water throughout the day.',
-  'Get regular exercise to maintain a healthy lifestyle.',
-];
-
-const notRecommendedArray = [
-  'Limit the intake of sugary snacks and beverages.',
-  'Avoid excessive consumption of processed foods.',
-  'Reduce the intake of saturated fats and cholesterol.',
-];
+import SvgIcon from "@mui/material/SvgIcon";
+import pregaNews from "./pregaNews.svg";
+import cardiacNews from "./cardiac.svg";
+import diabetic from "./Diabetic.svg";
+import child from "./child.svg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faTimesCircle, faBaby } from '@fortawesome/free-solid-svg-icons';
+import { green, red } from '@mui/material/colors';
 
 const PrettoSlider = styled(Slider)(({ theme }) => ({
   color: "#52af77",
@@ -159,6 +150,7 @@ const marks = [
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+// image mapping to the slider
 const cards = [{ N1: "Nutrient1" }, { N2: "Nutrient2" }, { N3: "Nutrient3" }];
 const new_cards = [
   { type: "protein", image: proteinImage },
@@ -166,10 +158,10 @@ const new_cards = [
   { type: "fiber", image: fibreImage },
   { type: "carbs", image: carbsImage },
 ];
-const StyledImg = styled('img')({
-  width: '100%', // Adjust the width as needed
-  height: 'auto', // Adjust the height as needed
-  display: 'block',
+const StyledImg = styled("img")({
+  width: "100%", // Adjust the width as needed
+  height: "auto", // Adjust the height as needed
+  display: "block",
 });
 function CustomIcon({ src, alt, ...props }) {
   return <StyledImg src={src} alt={alt} {...props} />;
@@ -177,8 +169,33 @@ function CustomIcon({ src, alt, ...props }) {
 
 function Album() {
   const [cards, setCards] = useState([]);
+
   const [loading, setLoading] = useState(true);
-  const flag = 0;
+
+  const [loadingTopNutrients, setLoadingTopNutrients] = useState(true);
+
+  const [conditionStatus, setConditionStatus] = useState({
+    pregnant: {
+      count: 0,
+      ingredients: [],
+      recommended: true,
+    },
+    diabetic: {
+      count: 0,
+      ingredients: [],
+      recommended: true,
+    },
+    child: {
+      count: 0,
+      ingredients: [],
+      recommended: true,
+    },
+    cardiac: {
+      count: 0,
+      ingredients: [],
+      recommended: true,
+    },
+  });
 
   const [topNutrients, setTopNutrients] = useState({
     protein: 0,
@@ -186,8 +203,69 @@ function Album() {
     fiber: 0,
     carbs: 0,
   });
+  const flag = 0;
 
-  const [loadingTopNutrients, setLoadingTopNutrients] = useState(true);
+  // ...
+
+  useEffect(() => {
+    const fetchConditionStatus = async () => {
+      try {
+        // Fetch Pregnancy status
+        const responsePregnant = await fetch("/api/home/is-rec-pregnant");
+        const dataPregnant = await responsePregnant.json();
+        setConditionStatus((prevStatus) => ({
+          ...prevStatus,
+          pregnant: {
+            count: dataPregnant.count,
+            ingredients: dataPregnant.ingredients,
+            recommended: dataPregnant.count === 0,
+          },
+        }));
+
+        // Fetch Diabetic status
+        const responseDiabetic = await fetch("/api/home/is-rec-diabetic");
+        const dataDiabetic = await responseDiabetic.json();
+        setConditionStatus((prevStatus) => ({
+          ...prevStatus,
+          diabetic: {
+            count: dataDiabetic.count,
+            ingredients: dataDiabetic.ingredients,
+            recommended: dataDiabetic.count === 0,
+          },
+        }));
+
+        // Fetch Child status
+        const responseChild = await fetch("/api/home/is-rec-child");
+        const dataChild = await responseChild.json();
+        setConditionStatus((prevStatus) => ({
+          ...prevStatus,
+          child: {
+            count: dataChild.count,
+            ingredients: dataChild.ingredients,
+            recommended: dataChild.count === 0,
+          },
+        }));
+
+        // Fetch Cardiac status
+        const responseCardiac = await fetch("/api/home/is-rec-cardiac");
+        const dataCardiac = await responseCardiac.json();
+        setConditionStatus((prevStatus) => ({
+          ...prevStatus,
+          cardiac: {
+            count: dataCardiac.count,
+            ingredients: dataCardiac.ingredients,
+            recommended: dataCardiac.count === 0,
+          },
+        }));
+      } catch (error) {
+        console.error("Error checking condition status:", error);
+      }
+      console.log(conditionStatus);
+    };
+
+    fetchConditionStatus();
+  }, []);
+  // ...
 
   useEffect(() => {
     const fetchTopNutrients = async () => {
@@ -230,10 +308,10 @@ function Album() {
     return (
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
         }}
       >
         <CircularProgress />
@@ -247,40 +325,7 @@ function Album() {
         <Toolbar></Toolbar>
       </AppBar>
       <main>
-        <Box
-          sx={{
-            bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Nutrients
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="text.secondary"
-              paragraph
-            ></Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              {/* <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button> */}
-            </Stack>
-          </Container>
-        </Box>
+          
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
             {Array.isArray(cards) && cards.length > 0 ? (
@@ -384,129 +429,524 @@ function Album() {
         </Container>
       </main>
 
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
+      {/* -------------------- Reccomendations---------------------------------------------------------- */}
+      {/* -------------------- Reccomendations---------------------------------------------------------- */}
+      {/* -------------------- Reccomendations---------------------------------------------------------- */}
+      {/* -------------------- Reccomendations---------------------------------------------------------- */}
+      {/* -------------------- Reccomendations---------------------------------------------------------- */}
+      {/* -------------------- Reccomendations---------------------------------------------------------- */}
+
+       {/* Section for Pregnancy */}
+       <Box
+          sx={{
+            bgcolor: '#f5f5f5',
+            p: 4,
+            transition: 'background-color 1s',
+            margin: '20px 0',
+          }}
+          component="section"
         >
-          Something here to give the footer a purpose!
-        </Typography>
-      </Box>
-      <Box sx={{ bgcolor: '#f5f5f5', p: 6, transition: 'background-color 1s' }} component="section">
+          <Container maxWidth="md">
+            <Grid container spacing={2}>
+              {/* Text on the left */}
+              <Grid item xs={12} sm={6}>
+                <div
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <Typography
+                    variant="h5"
+                    component="h2"
+                    gutterBottom
+                    sx={{
+                      color: conditionStatus.pregnant.recommended
+                        ? green[500]
+                        : red[500],
+                      fontSize: '28px',
+                      padding: '20px',
+                      transition: 'color 10s, font-size 1s',
+                      fontWeight: 'bold',
+                      marginBottom: '10px',
+                    }}
+                  >
+                    {conditionStatus.pregnant.recommended ? (
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    ) : (
+                      <FontAwesomeIcon icon={faTimesCircle} />
+                    )}{' '}
+                    {conditionStatus.pregnant.recommended
+                      ? 'Recommended'
+                      : 'Not Recommended'}{' '}
+                    for Pregnancy!
+                  </Typography>
+
+                  {/* Displaying the list of ingredients not recommended for pregnancy */}
+                  {conditionStatus.pregnant.count > 0 && (
+                    <div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: 'bold',
+                          marginBottom: '15px',
+                          fontSize: '18px',
+                        }}
+                      >
+                        Reasons:
+                      </Typography>
+                      <ul
+                        sx={{
+                          listStyle: 'none',
+                          padding: 0,
+                          margin: 0,
+                          textAlign: 'center', // Centering the list
+                        }}
+                      >
+                        {conditionStatus.pregnant.ingredients.map(
+                          (ingredient, index) => (
+                            <li
+                              key={index}
+                              sx={{
+                                marginBottom: '10px',
+                                fontSize: '16px',
+                                lineHeight: '1.6',
+                              }}
+                            >
+                              <Typography variant="body1">
+                                {ingredient}
+                              </Typography>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                  {conditionStatus.pregnant.count <= 0 && (
+                    <div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: 'bold',
+                          marginBottom: '5px',
+                          alignItems: 'center',
+                        }}
+                      >
+                        "We've meticulously curated the ingredients for your food
+                        – worry not, as there are no harmful components detected!"
+                      </Typography>
+                    </div>
+                  )}
+
+                  <Container
+                    sx={{
+                      py: 4,
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                    maxWidth="md"
+                  >
+                    <Button variant="contained" color="primary" size="large">
+                      Explore More
+                    </Button>
+                  </Container>
+                </div>
+              </Grid>
+
+              {/* Image on the right */}
+              <Grid
+              item
+              xs={12}
+              sm={6}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CustomIcon
+                src={pregaNews}
+                alt="Pregnant Lady"
+                sx={{ maxWidth: "100%", height: "auto" }}
+              />
+            </Grid>
+            </Grid>
+          </Container>
+        </Box>
+
+      {/* Section for Diabetic */}
+      <Box
+        sx={{
+          bgcolor: "#f5f5f5",
+          p: 4,
+          transition: "background-color 1s",
+          margin: "20px 0",
+        }}
+        component="section"
+      >
         <Container maxWidth="md">
           <Grid container spacing={2}>
-            {/* Text on the left */}
-            <Grid item xs={12} sm={6}>
-  <Typography variant="h5" component="h2" gutterBottom sx={{ color: flag === 1 ? 'green' : 'red', fontSize: '35px', padding: '25px', transition: 'color 10s, font-size 1s', fontWeight: 'bold' }}>
-    {flag === 1 ? 'Recommended' : 'Not Recommended'} 
-  </Typography>
-  <ul>
-    {flag === 1 ? (
-      recommendedArray.map((item, index) => (
-        <li key={index}>
-          <Typography variant="body1">{item}</Typography>
-        </li>
-      ))
-    ) : (
-      notRecommendedArray.map((item, index) => (
-        <li key={index}>
-          <Typography variant="body1">{item}</Typography>
-        </li>
-      ))
-    )}
-  </ul>
-</Grid>
-
-            {/* Image on the right */}
-            <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <CustomIcon src={pregaNews} alt="Pregnant Lady" />
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* Section 2 */}
-      <Box sx={{ bgcolor: '#f5f5f5', p: 6, transition: 'background-color 1s' }} component="section">
-        <Container maxWidth="md">
-          <Grid container spacing={2}>
-            {/* Image on the right */}
-            <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <CustomIcon src={cardiacNews} alt="New Protein Image" />
-            </Grid>
-            {/* Text on the left */}
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h5" component="h2" gutterBottom sx={{ color: 'blue', fontSize: '24px', transition: 'color 1s, font-size 1s' }}>
-                Recommended
-              </Typography>
-              <Typography variant="body1">
-                Add your recommended text or content here.
-              </Typography>
-              <Typography variant="h5" component="h2" gutterBottom sx={{ color: 'orange', fontSize: '24px', transition: 'color 1s, font-size 1s' }}>
-                Not Recommended
-              </Typography>
-              <Typography variant="body1">
-                Add your not recommended text or content here.
-              </Typography>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* Section 3 */}
-      <Box sx={{ bgcolor: '#f5f5f5', p: 6, transition: 'background-color 1s' }} component="section">
-        <Container maxWidth="md">
-          <Grid container spacing={2}>
-            {/* Text on the left */}
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h5" component="h2" gutterBottom sx={{ color: 'purple', fontSize: '24px', transition: 'color 1s, font-size 1s' }}>
-                Recommended
-              </Typography>
-              <Typography variant="body1">
-                Add your recommended text or content here.
-              </Typography>
-              <Typography variant="h5" component="h2" gutterBottom sx={{ color: 'brown', fontSize: '24px', transition: 'color 1s, font-size 1s' }}>
-                Not Recommended
-              </Typography>
-              <Typography variant="body1">
-                Add your not recommended text or content here.
-              </Typography>
-            </Grid>
-
-            {/* Image on the right */}
-            <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            {/* Image on the left */}
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              sx={{ display: "flex", justifyContent: "flex-start" }}
+            >
               <CustomIcon src={diabetic} alt="Diabetic" />
             </Grid>
+
+            {/* Text on the right */}
+            <Grid item xs={12} sm={6}>
+              <div
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  gutterBottom
+                  sx={{
+                    color: conditionStatus.diabetic.recommended
+                      ? "green"
+                      : "red",
+                    fontSize: "30px",
+                    padding: "25px",
+                    transition: "color 10s, font-size 1s",
+                    fontWeight: "bold",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {conditionStatus.diabetic.recommended ? (
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    ) : (
+                      <FontAwesomeIcon icon={faTimesCircle} />
+                    )}{' '}
+                  {conditionStatus.diabetic.recommended
+                    ? "Recommended"
+                    : "Not Recommended"}{" "}
+                  for Diabetic Individuals!
+                </Typography>
+
+                {/* Displaying the list of ingredients not recommended for Diabetic individuals */}
+                {conditionStatus.diabetic.count > 0 && (
+                  <div>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                        alignContent: "center",
+                      }}
+                    >
+                      Playing it safe with your health! Here's why we're not
+                      recommending:
+                    </Typography>
+                    <ul sx={{ listStyle: "none", padding: 0, margin: 0 }}>
+                      {conditionStatus.diabetic.ingredients.map(
+                        (ingredient, index) => (
+                          <li key={index} sx={{ marginBottom: "5px" }}>
+                            <Typography variant="body1">
+                              {ingredient}
+                            </Typography>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
+
+                {conditionStatus.diabetic.count <= 0 && (
+                  <div>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                        alignContent: "center",
+                      }}
+                    >
+                      "We've meticulously curated the ingredients for your food
+                      – worry not, as there are no harmful components detected!"
+                    </Typography>
+                  </div>
+                )}
+                <Container
+                  sx={{
+                    py: 4,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  maxWidth="md"
+                >
+                  <Button variant="contained" color="primary" size="large">
+                    Explore More
+                  </Button>
+                </Container>
+              </div>
+            </Grid>
           </Grid>
         </Container>
       </Box>
 
-      {/* Section 4 */}
-      <Box sx={{ bgcolor: '#f5f5f5', p: 6, transition: 'background-color 1s' }} component="section">
+      {/* Section for Cardiac */}
+      <Box
+        sx={{
+          bgcolor: "#f5f5f5",
+          p: 4,
+          transition: "background-color 1s",
+          margin: "20px 0",
+        }}
+        component="section"
+      >
         <Container maxWidth="md">
           <Grid container spacing={2}>
-            {/* Image on the right */}
-            <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <CustomIcon src={child} alt="Diabetic" />
-            </Grid>
             {/* Text on the left */}
             <Grid item xs={12} sm={6}>
-              <Typography variant="h5" component="h2" gutterBottom sx={{ color: 'teal', fontSize: '24px', transition: 'color 1s, font-size 1s' }}>
-                Recommended
-              </Typography>
-              <Typography variant="body1">
-                Add your recommended text or content here.
-              </Typography>
-              <Typography variant="h5" component="h2" gutterBottom sx={{ color: 'gray', fontSize: '24px', transition: 'color 1s, font-size 1s' }}>
-                Not Recommended
-              </Typography>
-              <Typography variant="body1">
-                Add your not recommended text or content here.
-              </Typography>
+              <div
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  gutterBottom
+                  sx={{
+                    color: conditionStatus.cardiac.recommended
+                      ? "green"
+                      : "red",
+                    fontSize: "28px",
+                    padding: "20px",
+                    transition: "color 10s, font-size 1s",
+                    fontWeight: "bold",
+                    marginBottom: "10px",
+                  }}
+                >
+                {conditionStatus.cardiac.recommended ? (
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    ) : (
+                      <FontAwesomeIcon icon={faTimesCircle} />
+                    )}{' '}
+                  {conditionStatus.cardiac.recommended
+                    ? "Recommended"
+                    : "Not Recommended"}{" "}
+                  for Cardiac Patients!
+                </Typography>
+
+                {/* Displaying the list of ingredients not recommended for Cardiac patients */}
+                {conditionStatus.cardiac.count > 0 && (
+                  <div>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: "bold",
+                        marginBottom: "15px",
+                        fontSize: "18px",
+                        alignContent: "center",
+                      }}
+                    >
+                      Playing it safe with your health! Here's why we're not
+                      recommending:
+                    </Typography>
+                    <ul
+                      sx={{
+                        listStyle: "none",
+                        padding: 0,
+                        margin: 0,
+                        textAlign: "center", // Centering the list
+                      }}
+                    >
+                      {conditionStatus.cardiac.ingredients.map(
+                        (ingredient, index) => (
+                          <li
+                            key={index}
+                            sx={{
+                              marginBottom: "10px",
+                              fontSize: "16px",
+                              lineHeight: "1.6",
+                            }}
+                          >
+                            <Typography variant="body1">
+                              {ingredient}
+                            </Typography>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
+                {conditionStatus.cardiac.count <= 0 && (
+                  <div>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                        alignContent: "center",
+                      }}
+                    >
+                      "We've meticulously curated the ingredients for your food
+                      – worry not, as there are no harmful components detected!"
+                    </Typography>
+                  </div>
+                )}
+                <Container
+                  sx={{
+                    py: 4,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  maxWidth="md"
+                >
+                  <Button variant="contained" color="primary" size="large">
+                    Explore More
+                  </Button>
+                </Container>
+              </div>
+            </Grid>
+
+            {/* Image on the right */}
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CustomIcon
+                src={cardiacNews}
+                alt="Cardiac"
+                sx={{ maxWidth: "100%", height: "auto" }}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Section for Child */}
+      <Box
+        sx={{
+          bgcolor: "#f5f5f5",
+          p: 4,
+          transition: "background-color 1s",
+          margin: "20px 0",
+        }}
+        component="section"
+      >
+        <Container maxWidth="md">
+          <Grid container spacing={2}>
+            {/* Image on the left */}
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              sx={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <CustomIcon src={child} alt="Child" />
+            </Grid>
+
+            {/* Text on the right */}
+            <Grid item xs={12} sm={6}>
+              <div
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  gutterBottom
+                  sx={{
+                    color: conditionStatus.child.recommended ? "green" : "red",
+                    fontSize: "30px",
+                    padding: "25px",
+                    transition: "color 10s, font-size 1s",
+                    fontWeight: "bold",
+                    marginBottom: "10px",
+                  }}
+                >
+                   {conditionStatus.diabetic.recommended ? (
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    ) : (
+                      <FontAwesomeIcon icon={faTimesCircle} />
+                    )}{' '}
+                  {conditionStatus.child.recommended
+                    ? "Recommended"
+                    : "Not Recommended"}{" "}
+                  for Children!
+                </Typography>
+
+                {/* Displaying the list of ingredients not recommended for children */}
+                {conditionStatus.child.count > 0 && (
+                  <div>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                        alignContent: "center",
+                      }}
+                    >
+                      Playing it safe with your health! Here's why we're not
+                      recommending:
+                    </Typography>
+                    <ul sx={{ listStyle: "none", padding: 0, margin: 0 }}>
+                      {conditionStatus.child.ingredients.map(
+                        (ingredient, index) => (
+                          <li key={index} sx={{ marginBottom: "5px" }}>
+                            <Typography variant="body1">
+                              {ingredient}
+                            </Typography>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
+                {conditionStatus.child.count <= 0 && (
+                  <div>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                        alignContent: "center",
+                      }}
+                    >
+                      "We've meticulously curated the ingredients for your food
+                      – worry not, as there are no harmful components detected!"
+                    </Typography>
+                  </div>
+                )}
+                <Container
+                  sx={{
+                    py: 4,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  maxWidth="md"
+                >
+                  <Button variant="contained" color="primary" size="large">
+                    Explore More
+                  </Button>
+                </Container>
+              </div>
             </Grid>
           </Grid>
         </Container>

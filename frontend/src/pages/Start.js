@@ -11,14 +11,16 @@ import {
   InputLabel,
 } from '@mui/material';
 import { PhotoCamera, CloudUpload, GetApp, Videocam } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const Start = () => {
+  const navigate = useNavigate();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const inputRef = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
   const [imageData, setImageData] = useState(null);
-  const [mode, setMode] = useState('initial'); // 'initial', 'ingredients', 'table'
+  const [mode, setMode] = useState('initial');
 
   const startRecording = async () => {
     if (imageData) {
@@ -60,14 +62,43 @@ const Start = () => {
   };
 
   const downloadImage = () => {
-    const a = document.createElement('a');
-    a.href = imageData;
-    a.download = 'captured-image.jpeg';
-    a.click();
+    if (imageData) {
+      // Pass the destination path based on the selected mode
+      const destinationPath = mode === 'ingredients' ? '/album' : '/table';
+      handleUpload(destinationPath);
+    }
   };
 
   const handleButtonClick = (selectedMode) => {
     setMode(selectedMode);
+  };
+
+  const handleUpload = async (destinationPath) => {
+    const formData = new FormData();
+    const blob = await dataURItoBlob(imageData);
+    formData.append('image', blob, 'captured-image.jpeg');
+
+    try {
+      const response = await fetch('/api/home/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert('File uploaded successfully.');
+        navigate(destinationPath);
+      } else {
+        alert('Error uploading the file.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const dataURItoBlob = async (dataURI) => {
+    const response = await fetch(dataURI);
+    const blob = await response.blob();
+    return blob;
   };
 
   return (
