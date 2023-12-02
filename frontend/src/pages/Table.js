@@ -108,21 +108,21 @@ export default function Table() {
   };
 
   const sendBMItoBackend = async (userInfo, bmi) => {  
-    const response = await fetch('/api/home/post-user-bmi', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        age: userInfo.age,
-        weight: userInfo.weight,
-        height: userInfo.height,
-        gender: userInfo.gender,
-        bmi: bmi,
-      })
-    });
-    if (!response.ok) {
-      throw new Error(`Request failed with status: ${response.status}`);
-    }
+    // const response = await fetch('/api/home/post-user-bmi', {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     age: userInfo.age,
+    //     weight: userInfo.weight,
+    //     height: userInfo.height,
+    //     gender: userInfo.gender,
+    //     bmi: bmi,
+    //   })
+    // });
+    // if (!response.ok) {
+    //   throw new Error(`Request failed with status: ${response.status}`);
+    // }
   };
   
   const handleChange = (key, value) => {
