@@ -16,6 +16,8 @@
     "@testing-library/user-event": "^13.5.0",
     "fortawesome": "^0.0.1-security",
     "react": "^18.2.0",
+    "react-circular-progressbar": "^2.1.0",
+    "react-circular-slider": "^1.0.12",
     "react-dom": "^18.2.0",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.16.0",

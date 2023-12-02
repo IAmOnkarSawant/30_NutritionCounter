@@ -23,7 +23,7 @@ function Test() {
 
   // Updated function to navigate to the Start page
   const handleNavigateToStart = () => {
-    navigate('/album'); // Navigate to the Start page
+    navigate('/start'); // Navigate to the Start page
   };
 
   const handleUpload = async () => {
