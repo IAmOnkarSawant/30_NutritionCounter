@@ -12,7 +12,7 @@ const NoCardiac = require("../Models/NoCadiacModel");
 const NoChild = require("../Models/NoChildModel");
 const NoDiabetic = require("../Models/NoDiabeticModel");
 const requireAuth = require("../Middleware/requireAuth");
-const User = require("../Models/userInfoModel");
+// const User = require("../Models/userInfoModel");
 const router = express.Router();
 let nutrients = [];
 let table_contents = [];
@@ -28,37 +28,37 @@ let nutrients_details = [];
 // Post the BMI details of user
 //------------------------------------------------------------
 router.post('/post-user-bmi', async (req, res) => {
-  try {
-    const { age, weight, height, gender, bmi } = req.body;
+  // try {
+  //   const { age, weight, height, gender, bmi } = req.body;
 
-    // Validate the incoming data (you may want to add more validation)
-    if (!age || !weight || !height || !gender || !bmi) {
-      return res.status(400).json({ error: 'Incomplete data' });
-    }
-    try {
-      // Clear all documents from the newUser collection
-      await User.deleteMany({});
-      console.log('Collection cleared');
-    } catch (error) {
-      console.error('Error clearing collection:', error);
-    }
-    // Assuming you have a MongoDB model for user data, replace 'User' with your actual model
-    const newUser = new User({
-      age,
-      weight,
-      height,
-      gender,
-      bmi,
-    });
+  //   // Validate the incoming data (you may want to add more validation)
+  //   if (!age || !weight || !height || !gender || !bmi) {
+  //     return res.status(400).json({ error: 'Incomplete data' });
+  //   }
+  //   try {
+  //     // Clear all documents from the newUser collection
+  //     await User.deleteMany({});
+  //     console.log('Collection cleared');
+  //   } catch (error) {
+  //     console.error('Error clearing collection:', error);
+  //   }
+  //   // Assuming you have a MongoDB model for user data, replace 'User' with your actual model
+  //   const newUser = new User({
+  //     age,
+  //     weight,
+  //     height,
+  //     gender,
+  //     bmi,
+  //   });
 
-    // Save the user data to your database
-    await newUser.save();
+  //   // Save the user data to your database
+  //   await newUser.save();
 
-    res.status(201).json({ message: 'User BMI data saved successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+  //   res.status(201).json({ message: 'User BMI data saved successfully' });
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ error: 'Internal Server Error' });
+  // }
 });
 
 //------------------------------------------------------------
