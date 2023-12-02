@@ -107,12 +107,24 @@ export default function Table() {
     return weightInKg / (heightInM * heightInM); // Multiply by 100 to get a percentage
   };
 
-  const sendBMItoBackend = (bmi) => {
-    // Send BMI data to the backend here
-    // Example: fetch('/api/bmi', { method: 'POST', body: JSON.stringify({ bmi }), headers: { 'Content-Type': 'application/json' } })
-    console.log('BMI sent to the backend:', bmi);
+  const sendBMItoBackend = async (userInfo, bmi) => {  
+    // const response = await fetch('/api/home/post-user-bmi', {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     age: userInfo.age,
+    //     weight: userInfo.weight,
+    //     height: userInfo.height,
+    //     gender: userInfo.gender,
+    //     bmi: bmi,
+    //   })
+    // });
+    // if (!response.ok) {
+    //   throw new Error(`Request failed with status: ${response.status}`);
+    // }
   };
-
+  
   const handleChange = (key, value) => {
     console.log(`Setting ${key} to ${value}`);
     // You can add logic here to handle the changes in nutrient values
@@ -218,14 +230,12 @@ export default function Table() {
             margin="normal"
           />
           {/* Updated InputLabel and Select for Gender */}
-          <TextField
-            label="Gender"
-            fullWidth
-            margin="normal"
-          ></TextField>
             <Select
+              label="Gender"
+              fullWidth
               value={userInfo.gender}
               onChange={(e) => setUserInfo({ ...userInfo, gender: e.target.value })}
+              margin="normal"
             >
               <MenuItem value="">Select Gender</MenuItem>
               <MenuItem value="male">Male</MenuItem>

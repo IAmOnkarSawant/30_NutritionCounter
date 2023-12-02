@@ -12,11 +12,101 @@ const NoCardiac = require("../Models/NoCadiacModel");
 const NoChild = require("../Models/NoChildModel");
 const NoDiabetic = require("../Models/NoDiabeticModel");
 const requireAuth = require("../Middleware/requireAuth");
+const User = require("../Models/userInfoModel");
 const router = express.Router();
 let nutrients = [];
+let table_contents = [];
+let user_details = [];
 let nutrients_details = [];
 
+//==========================================================================//
+//                           Table Routes                                   //
+//==========================================================================//
 
+
+//------------------------------------------------------------
+// Post the BMI details of user
+//------------------------------------------------------------
+router.post('/post-user-bmi', async (req, res) => {
+  try {
+    const { age, weight, height, gender, bmi } = req.body;
+
+    // Validate the incoming data (you may want to add more validation)
+    if (!age || !weight || !height || !gender || !bmi) {
+      return res.status(400).json({ error: 'Incomplete data' });
+    }
+    try {
+      // Clear all documents from the newUser collection
+      await User.deleteMany({});
+      console.log('Collection cleared');
+    } catch (error) {
+      console.error('Error clearing collection:', error);
+    }
+    // Assuming you have a MongoDB model for user data, replace 'User' with your actual model
+    const newUser = new User({
+      age,
+      weight,
+      height,
+      gender,
+      bmi,
+    });
+
+    // Save the user data to your database
+    await newUser.save();
+
+    res.status(201).json({ message: 'User BMI data saved successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+//------------------------------------------------------------
+// Run the model for table
+//------------------------------------------------------------
+router.get("/run-python-script/table", (req, res) => {
+  let stdout = "";
+  let stderr = "";
+
+  console.log(__dirname);
+  const pythonScriptPath = path.resolve(__dirname, "modelTable.py");
+  const pythonScriptCommand = `python "${pythonScriptPath}"`;
+  console.log(pythonScriptCommand);
+  const pythonProcess = exec(pythonScriptCommand);
+
+  pythonProcess.stdout.on("data", (data) => {
+    stdout += data;
+  });
+
+  pythonProcess.stderr.on("data", (data) => {
+    stderr += data;
+  });
+
+  pythonProcess.on("close", (code) => {
+    if (code !== 0) {
+      console.error(`Error: Python script exited with code ${code}`);
+    }
+
+    // Processing the Python script's output and stderr
+    const noutput = JSON.parse(stdout);
+    const errorOutput = stderr.split("\n").filter(Boolean);
+    table_contents = noutput;
+    for (const table_content of table_contents) {
+      if (table_content["percentage"] > 20)
+        table_content["DV%"] = "high";
+      else if (table_content["percentage"] >= 5 && table_content["percentage"] <= 20)
+        table_content["DV%"] = "normal";
+      else
+        table_content["DV%"] = "low";
+    }
+    res.json({ noutput, errorOutput });
+  });
+});
+module.exports = router;
+
+//==========================================================================//
+//                       Neutrients Routes                                  //
+//==========================================================================//
 
 //------------------------------------------------------------
 // Should I reccomend to pregnent?
@@ -321,6 +411,11 @@ router.post("/upload", upload.single("image"), (req, res) => {
 
   const uploadedFile = req.file;
   const filePath = uploadedFile.path;
+  nutrients.splice(0, nutrients.length);
+  table_contents.splice(0, table_contents.length);
+  user_details.splice(0, user_details.length);
+  nutrients_details.splice(0, nutrients_details.length);
+  
   res
     .status(200)
     .json({ message: "File uploaded successfully", filePath: filePath });
@@ -355,8 +450,10 @@ router.get("/delete-files", (req, res) => {
   });
 });
 
+
+
 //------------------------------------------------------------
-// Run the model
+// Run the model for neutrients
 //------------------------------------------------------------
 router.get("/run-python-script", (req, res) => {
   let stdout = "";
