@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import AppBar from '@mui/material/AppBar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import React, { useState, useEffect } from "react";
+import AppBar from "@mui/material/AppBar";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toolbar from "@mui/material/Toolbar";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 // Add these imports
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/system';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import { styled } from "@mui/system";
 
 // Replace the Slider import with PrettoSlider
-import Slider from '@mui/material/Slider';
+import Slider from "@mui/material/Slider";
 
 // Add Dialog imports
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 // Define your theme or use an existing one
 const defaultTheme = createTheme();
@@ -43,18 +43,20 @@ const data = {
 
 // Use styled(PrettoSlider) instead of Slider
 const PrettoSlider = styled(Slider)(({ theme }) => ({
-  color: '#52af77',
+  color: "#52af77",
   height: 8,
   // ... (other styles)
 }));
 
 export default function Table() {
   const [initialLoad, setInitialLoad] = useState(true);
+  const [tableInfo, setTableInfo] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({
-    age: '',
-    weight: '',
-    height: '',
-    gender: '',
+    age: "",
+    weight: "",
+    height: "",
+    gender: "",
   });
   const [openDialog, setOpenDialog] = useState(true);
   const [bmi, setBMI] = useState(null);
@@ -71,6 +73,38 @@ export default function Table() {
     return () => clearTimeout(delay);
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const scriptResponse = await fetch("/api/home/run-python-script-table");
+        const tableData = await scriptResponse.json();
+        // console.log(tableData);
+        setTableInfo(tableData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   const handleDialogSubmit = () => {
     // Perform BMI calculation here based on userInfo
     const calculatedBMI = calculateBMI(userInfo.weight, userInfo.height);
@@ -83,10 +117,10 @@ export default function Table() {
 
     // Reset the user info
     setUserInfo({
-      age: '',
-      weight: '',
-      height: '',
-      gender: '',
+      age: "",
+      weight: "",
+      height: "",
+      gender: "",
     });
 
     // Close the pop-up
@@ -100,7 +134,7 @@ export default function Table() {
     return weightInKg / (heightInM * heightInM); // Multiply by 100 to get a percentage
   };
 
-  const sendBMItoBackend = async (userInfo, bmi) => {  
+  const sendBMItoBackend = async (userInfo, bmi) => {
     // const response = await fetch('/api/home/post-user-bmi', {
     //   headers: {
     //     'Content-Type': 'application/json',
@@ -117,7 +151,7 @@ export default function Table() {
     //   throw new Error(`Request failed with status: ${response.status}`);
     // }
   };
-  
+
   const handleChange = (key, value) => {
     console.log(`Setting ${key} to ${value}`);
     // You can add logic here to handle the changes in nutrient values
@@ -127,60 +161,68 @@ export default function Table() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar>
-          {/* Add any app bar content if needed */}
-        </Toolbar>
+        <Toolbar>{/* Add any app bar content if needed */}</Toolbar>
       </AppBar>
       <main>
-        <Container sx={{ py: 8, background: 'none' }} maxWidth="md">
-          {/* Display small-sized BMI */}
-          {bmi !== null && (
-            <Box sx={{ textAlign: 'center', mb: 4 }}>
-              {bmi !== undefined && (
-                <CircularProgressbar
-                  value={bmi}
-                  text={`${bmi.toFixed(2)}`}
-                  styles={buildStyles({
-                    rotation: 0.25,
-                    strokeLinecap: 'butt',
-                    textSize: '16px',
-                    pathTransitionDuration: 0.5,
-                    pathColor: `rgba(30, 140, 100, ${bmi / 100})`,
-                    textColor: '#f88',
-                    trailColor: 'orange',
-                    backgroundColor: 'orange',
-                  })}
-                />
-              )}
-              <Typography variant="body2" color="textSecondary">
-                {`BMI`}
-              </Typography>
-            </Box>
-          )}
+      <Container sx={{ py: 8, background: "none" }} maxWidth="md">
+  {/* Display small-sized BMI */}
+  {bmi !== null && (
+    <Box sx={{ textAlign: "center", mb: 4 }}>
+      {bmi !== undefined && (
+        <CircularProgressbar
+          value={bmi}
+          text={`${bmi.toFixed(2)}`}
+          styles={buildStyles({
+            rotation: 0.25,
+            strokeLinecap: "butt",
+            textSize: "16px",
+            pathTransitionDuration: 0.5,
+            pathColor: `rgba(30, 140, 100, ${bmi / 100})`,
+            textColor: "#f88",
+            trailColor: "orange",
+            backgroundColor: "orange",
+          })}
+        />
+      )}
+      <Typography variant="body2" color="textSecondary">
+        {`BMI`}
+      </Typography>
+    </Box>
+  )}
 
-          {!openDialog && (
-            <div style={{ background: 'white', padding: '16px', borderRadius: '5px', boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.1)' }}>
-              <Grid container spacing={0}>
-                {Object.entries(data).map(([key, value]) => (
-                  <React.Fragment key={key}>
-                    <Grid item xs={12} sm={6}>
-                      <Typography variant="h6" component="div" >
-                        {key}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} sx={{ marginLeft: '150px' }} >
-                      <PrettoSliderCard
-                        value={value}
-                        onChange={(newValue) => handleChange(key, newValue)}
-                        initialLoad={initialLoad}
-                      />
-                    </Grid>
-                  </React.Fragment>
-                ))}
-              </Grid>
-            </div>
-          )}
-        </Container>
+  {!openDialog && (
+    <div
+      style={{
+        background: "white",
+        padding: "16px",
+        borderRadius: "5px",
+        boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
+      }}
+    >
+      <Grid container spacing={0}>
+        {tableInfo.noutput.map((nutrient) => (
+          <React.Fragment key={nutrient.Nutrients}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant="h6" component="div">
+                {nutrient.Nutrients + (nutrient.weight ? " (" +nutrient.weight+") " : "") }
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={8} style={{ display: 'flex', alignItems: 'center', paddingRight: '10px' }}>
+              <PrettoSliderCard
+                value={(nutrient.percentage && nutrient.percentage != '0')  ? nutrient.percentage : null} // Show the bar only if percentage exists
+                onChange={(newValue) =>
+                  handleChange(nutrient.Nutrients, newValue)
+                }
+                initialLoad={initialLoad}
+              />
+            </Grid>
+          </React.Fragment>
+        ))}
+      </Grid>
+    </div>
+  )}
+</Container>
+
       </main>
 
       {/* Dialog for entering user information */}
@@ -199,7 +241,9 @@ export default function Table() {
             label="Weight (kg)"
             type="number"
             value={userInfo.weight}
-            onChange={(e) => setUserInfo({ ...userInfo, weight: e.target.value })}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, weight: e.target.value })
+            }
             fullWidth
             margin="normal"
           />
@@ -207,26 +251,24 @@ export default function Table() {
             label="Height (cm)"
             type="number"
             value={userInfo.height}
-            onChange={(e) => setUserInfo({ ...userInfo, height: e.target.value })}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, height: e.target.value })
+            }
             fullWidth
             margin="normal"
           />
           {/* Updated InputLabel and Select for Gender */}
-          <TextField
-            label="Gender"
-            fullWidth
-            margin="normal"
-          ></TextField>
-            <Select
-              value={userInfo.gender}
-              onChange={(e) => setUserInfo({ ...userInfo, gender: e.target.value })}
-            >
-              <MenuItem value="">Select Gender</MenuItem>
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
-            </Select>
-          
-
+          <TextField label="Gender" fullWidth margin="normal"></TextField>
+          <Select
+            value={userInfo.gender}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, gender: e.target.value })
+            }
+          >
+            <MenuItem value="">Select Gender</MenuItem>
+            <MenuItem value="male">Male</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
+          </Select>
         </DialogContent>
         <DialogActions>
           <Button
@@ -234,10 +276,10 @@ export default function Table() {
             color="primary"
             disabled={
               !(
-                userInfo.age !== '' &&
-                userInfo.weight !== '' &&
-                userInfo.height !== '' &&
-                userInfo.gender !== ''
+                userInfo.age !== "" &&
+                userInfo.weight !== "" &&
+                userInfo.height !== "" &&
+                userInfo.gender !== ""
               )
             }
           >
@@ -271,7 +313,7 @@ function PrettoSliderCard({ value, onChange, initialLoad }) {
   };
 
   return (
-    <div style={{ width: '150%' }}>
+    <div style={{ width: "150%" }}>
       {/* Use the styled PrettoSlider component here */}
       <PrettoSlider
         value={sliderValue}
@@ -280,14 +322,14 @@ function PrettoSliderCard({ value, onChange, initialLoad }) {
         valueLabelDisplay="auto"
         step={1} // Adjust the step for smoother movement
         marks={[
-          { value: 0, label: '0' },
-          { value: 50, label: '50' },
-          { value: 100, label: '100' },
+          { value: 0, label: "0" },
+          { value: 50, label: "50" },
+          { value: 100, label: "100" },
         ]}
         min={0}
         max={100}
         sx={{
-          transition: 'all 2s ease-in-out', // Add a transition for smoother movement
+          transition: "all 2s ease-in-out", // Add a transition for smoother movement
         }}
       />
     </div>
