@@ -18,7 +18,75 @@ let table_contents = [];
 let user_details = [];
 let nutrients_details = [];
 
+//==========================================================================//
+//                           Table Routes                                   //
+//==========================================================================//
 
+
+//------------------------------------------------------------
+// Post the BMI details of user
+//------------------------------------------------------------
+router.post("/post-user-bmi", async (req, res) => {
+  try {
+    if (nutrients.length === 0) {
+      return res.status(404).json({ error: "Table Contents Not found" });
+    }   
+    res
+      .status(200)
+      .json(table_contents);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//------------------------------------------------------------
+// Run the model for table
+//------------------------------------------------------------
+router.get("/run-python-script/table", (req, res) => {
+  let stdout = "";
+  let stderr = "";
+
+  console.log(__dirname);
+  const pythonScriptPath = path.resolve(__dirname, "modelTable.py");
+  const pythonScriptCommand = `python "${pythonScriptPath}"`;
+  console.log(pythonScriptCommand);
+  const pythonProcess = exec(pythonScriptCommand);
+
+  pythonProcess.stdout.on("data", (data) => {
+    stdout += data;
+  });
+
+  pythonProcess.stderr.on("data", (data) => {
+    stderr += data;
+  });
+
+  pythonProcess.on("close", (code) => {
+    if (code !== 0) {
+      console.error(`Error: Python script exited with code ${code}`);
+    }
+
+    // Processing the Python script's output and stderr
+    const noutput = JSON.parse(stdout);
+    const errorOutput = stderr.split("\n").filter(Boolean);
+    table_contents = noutput;
+    for (const table_content of table_contents) {
+      if (table_content["percentage"] > 20)
+        table_content["DV%"] = "high";
+      else if (table_content["percentage"] >= 5 && table_content["percentage"] <= 20)
+        table_content["DV%"] = "normal";
+      else
+        table_content["DV%"] = "low";
+    }
+    res.json({ noutput, errorOutput });
+  });
+});
+module.exports = router;
+
+//==========================================================================//
+//                       Neutrients Routes                                  //
+//==========================================================================//
 
 //------------------------------------------------------------
 // Should I reccomend to pregnent?
@@ -363,42 +431,6 @@ router.get("/delete-files", (req, res) => {
 });
 
 
-//------------------------------------------------------------
-// Run the model for table
-//------------------------------------------------------------
-router.get("/run-python-script/table", (req, res) => {
-  let stdout = "";
-  let stderr = "";
-
-  console.log(__dirname);
-  const pythonScriptPath = path.resolve(__dirname, "modelTable.py");
-  const pythonScriptCommand = `python "${pythonScriptPath}"`;
-  console.log(pythonScriptCommand);
-  const pythonProcess = exec(pythonScriptCommand);
-
-  pythonProcess.stdout.on("data", (data) => {
-    stdout += data;
-  });
-
-  pythonProcess.stderr.on("data", (data) => {
-    stderr += data;
-  });
-
-  pythonProcess.on("close", (code) => {
-    if (code !== 0) {
-      console.error(`Error: Python script exited with code ${code}`);
-    }
-
-    // Process the Python script's output and stderr
-
-    // const output = stdout.split("\n").filter(Boolean);
-    // const noutput = output.map((element) => element.replace(/\r/g, ""));
-    // const errorOutput = stderr.split("\n").filter(Boolean);
-    // nutrients = noutput;
-    res.json({ noutput, errorOutput });
-  });
-});
-module.exports = router;
 
 //------------------------------------------------------------
 // Run the model for neutrients
