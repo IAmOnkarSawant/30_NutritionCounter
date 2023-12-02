@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -27,15 +26,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-// import CircularProgress from '@mui/material/CircularProgress'; // Import CircularProgress
 
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-
-
 // Define your theme or use an existing one
 const defaultTheme = createTheme();
+
+const data = {
+  Calorie: 10,
+  Fats: 10,
+  Protein: 20,
+  Sodium: 15,
+  Carbohydrate: 45,
+};
 
 // Use styled(PrettoSlider) instead of Slider
 const PrettoSlider = styled(Slider)(({ theme }) => ({
@@ -43,17 +47,6 @@ const PrettoSlider = styled(Slider)(({ theme }) => ({
   height: 8,
   // ... (other styles)
 }));
-
-
-
-// Default values for different nutrients
-const data = {
-  Calorie: 'high',
-  Fats: 'medium',
-  Protein: 'medium',
-  Sodium: 'medium',
-  Carbohydrate: 'medium',
-};
 
 export default function Table() {
   const [initialLoad, setInitialLoad] = useState(true);
@@ -145,58 +138,47 @@ export default function Table() {
             <Box sx={{ textAlign: 'center', mb: 4 }}>
               {bmi !== undefined && (
                 <CircularProgressbar
-                  // 
                   value={bmi}
                   text={`${bmi.toFixed(2)}`}
                   styles={buildStyles({
-                    // Rotation of path and trail, in number of turns (0-1)
                     rotation: 0.25,
-
-                    // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                     strokeLinecap: 'butt',
-
-                    // Text size
                     textSize: '16px',
-
-                    // How long animation takes to go from one percentage to another, in seconds
                     pathTransitionDuration: 0.5,
-
-                    // Can specify path transition in more detail, or remove it entirely
-                    // pathTransition: 'none',
-
-                    // Colors
-                    pathColor: `rgba(62, 152, 199, ${bmi / 100})`,
+                    pathColor: `rgba(30, 140, 100, ${bmi / 100})`,
                     textColor: '#f88',
-                    trailColor: '#d6d6d6',
-                    backgroundColor: '#3e98c7',
+                    trailColor: 'orange',
+                    backgroundColor: 'orange',
                   })}
                 />
               )}
               <Typography variant="body2" color="textSecondary">
-                {`${bmi.toFixed(2)}`}
+                {`BMI`}
               </Typography>
             </Box>
           )}
 
           {!openDialog && (
-            <Grid container spacing={4}>
-              {Object.entries(data).map(([key, value]) => (
-                <Grid item key={key} xs={12} sm={6} md={4}>
-                  <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h5" component="h2">
+            <div style={{ background: 'white', padding: '16px', borderRadius: '5px', boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.1)' }}>
+              <Grid container spacing={0}>
+                {Object.entries(data).map(([key, value]) => (
+                  <React.Fragment key={key}>
+                    <Grid item xs={12} sm={6}>
+                      <Typography variant="h6" component="div" >
                         {key}
                       </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} sx={{ marginLeft: '150px' }} >
                       <PrettoSliderCard
                         value={value}
                         onChange={(newValue) => handleChange(key, newValue)}
                         initialLoad={initialLoad}
                       />
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
+                    </Grid>
+                  </React.Fragment>
+                ))}
+              </Grid>
+            </div>
           )}
         </Container>
       </main>
@@ -230,12 +212,14 @@ export default function Table() {
             margin="normal"
           />
           {/* Updated InputLabel and Select for Gender */}
+          <TextField
+            label="Gender"
+            fullWidth
+            margin="normal"
+          ></TextField>
             <Select
-              label="Gender"
-              fullWidth
               value={userInfo.gender}
               onChange={(e) => setUserInfo({ ...userInfo, gender: e.target.value })}
-              margin="normal"
             >
               <MenuItem value="">Select Gender</MenuItem>
               <MenuItem value="male">Male</MenuItem>
@@ -266,22 +250,17 @@ export default function Table() {
 }
 
 function PrettoSliderCard({ value, onChange, initialLoad }) {
-  const [sliderValue, setSliderValue] = useState(value === 'low' ? 0 : value === 'medium' ? 50 : 100);
+  const [sliderValue, setSliderValue] = useState(value);
 
   useEffect(() => {
     // Move the slider to its respective position after a delay
     if (!initialLoad) {
       const delay = setTimeout(() => {
-        setSliderValue(value === 'low' ? 0 : value === 'medium' ? 0 : 0);
-      }, 100); // Adjust the delay as needed
-
-      const resetDelay = setTimeout(() => {
-        setSliderValue(value === 'low' ? 0 : value === 'medium' ? 50 : 100);
-      }, 3000); // Adjust the delay as needed
+        setSliderValue(value);
+      }, 1000); // Adjust the delay as needed
 
       return () => {
         clearTimeout(delay);
-        clearTimeout(resetDelay);
       };
     }
   }, [initialLoad, value]);
@@ -292,7 +271,7 @@ function PrettoSliderCard({ value, onChange, initialLoad }) {
   };
 
   return (
-    <div>
+    <div style={{ width: '150%' }}>
       {/* Use the styled PrettoSlider component here */}
       <PrettoSlider
         value={sliderValue}
@@ -301,9 +280,9 @@ function PrettoSliderCard({ value, onChange, initialLoad }) {
         valueLabelDisplay="auto"
         step={1} // Adjust the step for smoother movement
         marks={[
-          { value: 0, label: 'Low' },
-          { value: 50, label: 'Medium' },
-          { value: 100, label: 'High' },
+          { value: 0, label: '0' },
+          { value: 50, label: '50' },
+          { value: 100, label: '100' },
         ]}
         min={0}
         max={100}
