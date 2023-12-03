@@ -7,7 +7,7 @@ import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar_Album() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
 
@@ -20,7 +20,7 @@ export default function Navbar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 0.5 }}>
+    <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ backgroundColor: '#e9e5e3' }}>
         <Toolbar>
           <nav style={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}>
@@ -60,17 +60,17 @@ export default function Navbar() {
                       variant="outlined"
                       color="primary"
                       style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
-                      onClick={() => handleClick("OCRSection")}
+                      onClick={() => handleClick("Ing")}
                     >
-                      OCR MODULE
+                      INGREDIENTS
                     </Button>
                     <Button
                       variant="outlined"
                       color="primary"
                       style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
-                      onClick={() => handleClick("SuggestionSection")}
+                      onClick={() => handleClick("Mac")}
                     >
-                      OUR SUGGESTIONS
+                      MACRO-NUTRIENTS
                     </Button>
                   </>
                 )}
@@ -79,9 +79,9 @@ export default function Navbar() {
                   variant="outlined"
                   color="primary"
                   style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
-                  onClick={() => handleClick("AnalyzeSection")}
+                  onClick={() => handleClick("Recom")}
                 >
-                  Let's Analyze
+                  RECOMMENDATIONS
                 </Button>
               </div>
             </div>

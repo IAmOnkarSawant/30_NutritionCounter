@@ -28,14 +28,11 @@ import pregaNews from "./pregaNews.svg";
 import cardiacNews from "./cardiac.svg";
 import diabetic from "./Diabetic.svg";
 import child from "./child.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheckCircle,
-  faTimesCircle,
-  faBaby,
-} from "@fortawesome/free-solid-svg-icons";
-import { green, red } from "@mui/material/colors";
-import Footer from "../components/footer";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faTimesCircle, faBaby } from '@fortawesome/free-solid-svg-icons';
+import { green, red } from '@mui/material/colors';
+
+import Navbar_Album from "../components/Navbar_Album";
 
 const PrettoSlider = styled(Slider)(({ theme }) => ({
   color: "#52af77",
@@ -325,23 +322,16 @@ function Album() {
   }
   return (
     <ThemeProvider theme={defaultTheme}>
-      <AppBar position="relative" style={{ marginTop: "20px" }}>
-        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-          <div
-            style={{
-              marginTop: "20px",
-              marginBottom: "20px",
-              borderRadius: "10px",
-              background: "#1976D2",
-              padding: "8px",
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="h4" sx={{ color: "white" }}>
-              INGREDIENTS LIST
+      <Navbar_Album/>
+      <br/>
+      <br/>
+      <br/>
+      <CssBaseline />
+      <AppBar id="Ing" position="relative">
+        {/* <Toolbar></Toolbar> */}
+        <Typography variant="h4" sx={{ color: "white" }}>
+              INGREDIENTS
             </Typography>
-          </div>
-        </Toolbar>
       </AppBar>
       <main>
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -411,15 +401,15 @@ function Album() {
             )}
           </Grid>
         </Container>
-        <AppBar position="relative" style={{ marginTop: "20px" }}>
+        <AppBar id="Mac" position="relative" style={{ marginTop: "20px" }}>
         <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
           <div
             style={{
-              marginTop: "20px",
-              marginBottom: "20px",
+              marginTop: "5px",
+              marginBottom: "5px",
               borderRadius: "10px",
               background: "#1976D2",
-              padding: "8px",
+              padding: "4px",
               textAlign: "center",
             }}
           >
@@ -471,19 +461,20 @@ function Album() {
         {/* -------------------- Reccomendations---------------------------------------------------------- */}
 
         {/* Section for Pregnancy */}
-        <AppBar position="relative" style={{ marginTop: "20px" }}>
+        <AppBar id="Recom" position="relative" style={{ marginTop: "20px" }}>
+       
           <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
             <div
               style={{
-                marginTop: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                background: "#1976D2",
-                padding: "8px",
-                textAlign: "center",
+                marginTop: "5px",
+              marginBottom: "5px",
+              borderRadius: "10px",
+              background: "#1976D2",
+              padding: "4px",
+              textAlign: "center",
               }}
             >
-              <Typography variant="h4" sx={{ color: "white" }}></Typography>
+              <Typography variant="h4" sx={{ color: "white" }}>RECOMMENDATIONS</Typography>
             </div>
           </Toolbar>
         </AppBar>
@@ -1008,7 +999,7 @@ function Album() {
           </Container>
         </Card>
       </main>
-      <Footer />
+      
     </ThemeProvider>
   );
 }

@@ -302,7 +302,8 @@ export default function Table() {
     <ThemeProvider theme={defaultTheme}>
       <Navbar />
       <br/>
-      <br/><br/>
+      <br/>
+      <br/>
       <CssBaseline />
       <AppBar position="relative" id="AnalyzeSection">
         <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>

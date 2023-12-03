@@ -12,6 +12,8 @@ import {
 } from '@mui/material';
 import { PhotoCamera, CloudUpload, GetApp, Videocam } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import Navbar_start from "../components/Navbar_start";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const Start = () => {
   const navigate = useNavigate();
@@ -100,8 +102,13 @@ const Start = () => {
     const blob = await response.blob();
     return blob;
   };
+  const defaultTheme = createTheme();
 
   return (
+    <ThemeProvider theme={defaultTheme}>
+    <Navbar_start/>
+    <br/>
+    <br/>
     <Container maxWidth="sm">
       <Typography variant="h4" align="center" gutterBottom style={{ marginTop: '20px', fontWeight: 'bold', color: 'black' }}>
         {mode === 'initial' && (
@@ -205,6 +212,7 @@ const Start = () => {
         </Card>
       )}
     </Container>
+    </ThemeProvider>
   );
 };
 
