@@ -23,14 +23,12 @@ let nutrients_details = [];
 //                           Table Routes                                   //
 //==========================================================================//
 
-
 //------------------------------------------------------------
 // Post the BMI details of user
 //------------------------------------------------------------
-router.post('/post-user-bmi', async (req, res) => {
+router.post("/post-user-bmi", async (req, res) => {
   // try {
   //   const { age, weight, height, gender, bmi } = req.body;
-
   //   // Validate the incoming data (you may want to add more validation)
   //   if (!age || !weight || !height || !gender || !bmi) {
   //     return res.status(400).json({ error: 'Incomplete data' });
@@ -50,10 +48,8 @@ router.post('/post-user-bmi', async (req, res) => {
   //     gender,
   //     bmi,
   //   });
-
   //   // Save the user data to your database
   //   await newUser.save();
-
   //   res.status(201).json({ message: 'User BMI data saved successfully' });
   // } catch (error) {
   //   console.error(error);
@@ -92,12 +88,13 @@ router.get("/run-python-script-table", (req, res) => {
     const errorOutput = stderr.split("\n").filter(Boolean);
     table_contents = noutput;
     for (const table_content of table_contents) {
-      if (table_content["percentage"] > 20)
-        table_content["DV%"] = "high";
-      else if (table_content["percentage"] >= 5 && table_content["percentage"] <= 20)
+      if (table_content["percentage"] > 20) table_content["DV%"] = "high";
+      else if (
+        table_content["percentage"] >= 5 &&
+        table_content["percentage"] <= 20
+      )
         table_content["DV%"] = "normal";
-      else
-        table_content["DV%"] = "low";
+      else table_content["DV%"] = "low";
     }
     res.json({ noutput, errorOutput });
   });
@@ -112,14 +109,12 @@ module.exports = router;
 //                           Table Routes                                   //
 //==========================================================================//
 
-
 //------------------------------------------------------------
 // Post the BMI details of user
 //------------------------------------------------------------
-router.post('/post-user-bmi', async (req, res) => {
+router.post("/post-user-bmi", async (req, res) => {
   // try {
   //   const { age, weight, height, gender, bmi } = req.body;
-
   //   // Validate the incoming data (you may want to add more validation)
   //   if (!age || !weight || !height || !gender || !bmi) {
   //     return res.status(400).json({ error: 'Incomplete data' });
@@ -139,10 +134,8 @@ router.post('/post-user-bmi', async (req, res) => {
   //     gender,
   //     bmi,
   //   });
-
   //   // Save the user data to your database
   //   await newUser.save();
-
   //   res.status(201).json({ message: 'User BMI data saved successfully' });
   // } catch (error) {
   //   console.error(error);
@@ -181,12 +174,13 @@ router.get("/run-python-script/table", (req, res) => {
     const errorOutput = stderr.split("\n").filter(Boolean);
     table_contents = noutput;
     for (const table_content of table_contents) {
-      if (table_content["percentage"] > 20)
-        table_content["DV%"] = "high";
-      else if (table_content["percentage"] >= 5 && table_content["percentage"] <= 20)
+      if (table_content["percentage"] > 20) table_content["DV%"] = "high";
+      else if (
+        table_content["percentage"] >= 5 &&
+        table_content["percentage"] <= 20
+      )
         table_content["DV%"] = "normal";
-      else
-        table_content["DV%"] = "low";
+      else table_content["DV%"] = "low";
     }
     res.json({ noutput, errorOutput });
   });
@@ -201,7 +195,6 @@ module.exports = router;
 //                           Table Routes                                   //
 //==========================================================================//
 
-
 //------------------------------------------------------------
 // Post the BMI details of user
 //------------------------------------------------------------
@@ -209,11 +202,8 @@ router.post("/post-user-bmi", async (req, res) => {
   try {
     if (nutrients.length === 0) {
       return res.status(404).json({ error: "Table Contents Not found" });
-    }   
-    res
-      .status(200)
-      .json(table_contents);
-
+    }
+    res.status(200).json(table_contents);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -227,11 +217,8 @@ router.get("/get-table-contents", async (req, res) => {
   try {
     if (nutrients.length === 0) {
       return res.status(404).json({ error: "Table Contents Not found" });
-    }   
-    res
-      .status(200)
-      .json(table_contents);
-
+    }
+    res.status(200).json(table_contents);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -317,7 +304,10 @@ router.get("/is-rec-pregnant", async (req, res) => {
     }
     res.status(200).json({
       count: ingredientsNotEatUnique.length,
-      ingredients: ingredientsNotEatUnique.length > 2 ? ingredientsNotEatUnique.slice(0, 2): ingredientsNotEatUnique
+      ingredients:
+        ingredientsNotEatUnique.length > 2
+          ? ingredientsNotEatUnique.slice(0, 2)
+          : ingredientsNotEatUnique,
     });
   } catch (error) {
     console.error(error);
@@ -365,7 +355,10 @@ router.get("/is-rec-cardiac", async (req, res) => {
 
     res.status(200).json({
       count: ingredientsNotEatUnique.length,
-      ingredients: ingredientsNotEatUnique.length > 2 ? ingredientsNotEatUnique.slice(0, 2): ingredientsNotEatUnique
+      ingredients:
+        ingredientsNotEatUnique.length > 2
+          ? ingredientsNotEatUnique.slice(0, 2)
+          : ingredientsNotEatUnique,
     });
   } catch (error) {
     console.error(error);
@@ -413,7 +406,10 @@ router.get("/is-rec-child", async (req, res) => {
 
     res.status(200).json({
       count: ingredientsNotEatUnique.length,
-      ingredients: ingredientsNotEatUnique.length > 2 ? ingredientsNotEatUnique.slice(0, 2): ingredientsNotEatUnique
+      ingredients:
+        ingredientsNotEatUnique.length > 2
+          ? ingredientsNotEatUnique.slice(0, 2)
+          : ingredientsNotEatUnique,
     });
   } catch (error) {
     console.error(error);
@@ -461,7 +457,10 @@ router.get("/is-rec-diabetic", async (req, res) => {
 
     res.status(200).json({
       count: ingredientsNotEatUnique.length,
-      ingredients: ingredientsNotEatUnique.length > 2 ? ingredientsNotEatUnique.slice(0, 2): ingredientsNotEatUnique
+      ingredients:
+        ingredientsNotEatUnique.length > 2
+          ? ingredientsNotEatUnique.slice(0, 2)
+          : ingredientsNotEatUnique,
     });
   } catch (error) {
     console.error(error);
@@ -585,7 +584,7 @@ router.post("/upload", upload.single("image"), (req, res) => {
   table_contents.splice(0, table_contents.length);
   user_details.splice(0, user_details.length);
   nutrients_details.splice(0, nutrients_details.length);
-  
+
   res
     .status(200)
     .json({ message: "File uploaded successfully", filePath: filePath });

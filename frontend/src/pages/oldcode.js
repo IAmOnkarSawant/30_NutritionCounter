@@ -1,70 +1,69 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Slider from '@mui/material/Slider';
-import Tooltip from '@mui/material/Tooltip';
-import PropTypes from 'prop-types';
-import { styled } from '@mui/system';
-import proteinImage from './protein.jpg';
-import fatImage from './fats.jpg';
-import fibreImage from './fiber.jpg';
-import carbsImage from './carbs.jpg';
-import { useEffect, useState } from 'react';
-
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Slider from "@mui/material/Slider";
+import Tooltip from "@mui/material/Tooltip";
+import PropTypes from "prop-types";
+import { styled } from "@mui/system";
+import proteinImage from "./protein.jpg";
+import fatImage from "./fats.jpg";
+import fibreImage from "./fiber.jpg";
+import carbsImage from "./carbs.jpg";
+import { useEffect, useState } from "react";
 
 const PrettoSlider = styled(Slider)(({ theme }) => ({
-  color: '#52af77',
+  color: "#52af77",
   height: 8,
-  '& .MuiSlider-track': {
-    border: 'none',
+  "& .MuiSlider-track": {
+    border: "none",
   },
-  '& .MuiSlider-thumb': {
+  "& .MuiSlider-thumb": {
     height: 24,
     width: 24,
-    backgroundColor: '#fff',
-    border: '2px solid currentColor',
-    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-      boxShadow: 'inherit',
+    backgroundColor: "#fff",
+    border: "2px solid currentColor",
+    "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
+      boxShadow: "inherit",
     },
-    '&:before': {
-      display: 'none',
+    "&:before": {
+      display: "none",
     },
   },
-  '& .MuiSlider-valueLabel': {
+  "& .MuiSlider-valueLabel": {
     lineHeight: 1.2,
     fontSize: 12,
-    background: 'unset',
+    background: "unset",
     padding: 0,
     width: 32,
     height: 32,
-    borderRadius: '50% 50% 50% 0',
-    backgroundColor: '#52af77',
-    transformOrigin: 'bottom left',
-    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-    '&:before': { display: 'none' },
-    '&.MuiSlider-valueLabelOpen': {
-      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+    borderRadius: "50% 50% 50% 0",
+    backgroundColor: "#52af77",
+    transformOrigin: "bottom left",
+    transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
+    "&:before": { display: "none" },
+    "&.MuiSlider-valueLabelOpen": {
+      transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
     },
-    '& > *': {
-      transform: 'rotate(45deg)',
+    "& > *": {
+      transform: "rotate(45deg)",
     },
   },
-  
-  '& .MuiSlider-thumb, & .MuiSlider-track': {
-    transition: theme.transitions.create(['left', 'transform'], {
-      duration: theme.transitions.duration.shortest, 
+
+  "& .MuiSlider-thumb, & .MuiSlider-track": {
+    transition: theme.transitions.create(["left", "transform"], {
+      duration: theme.transitions.duration.shortest,
     }),
   },
 }));
@@ -88,8 +87,8 @@ function CustomizedSlider() {
   const [sliderValue, setSliderValue] = useState(0);
 
   useEffect(() => {
-    const targetValue = 20; 
-    const duration = 2000; 
+    const targetValue = 20;
+    const duration = 2000;
 
     const startTime = Date.now();
     const updateSlider = () => {
@@ -108,7 +107,7 @@ function CustomizedSlider() {
     };
 
     updateSlider();
-  }, []); 
+  }, []);
 
   return (
     <Box sx={{ m: 1 }}>
@@ -155,9 +154,7 @@ export default function Album() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar>
-          
-        </Toolbar>
+        <Toolbar></Toolbar>
       </AppBar>
       <main>
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -165,12 +162,16 @@ export default function Album() {
             {cards.map((card, index) => (
               <Grid item key={index} xs={12} sm={6} md={4}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
                 >
                   <CardMedia
                     component="div"
                     sx={{
-                      pt: '56.25%',
+                      pt: "56.25%",
                     }}
                     //image="https://source.unsplash.com/random?wallpapers"
                   />
@@ -178,9 +179,7 @@ export default function Album() {
                     <Typography gutterBottom variant="h5" component="h2">
                       {Object.keys(card)[0]}
                     </Typography>
-                    <Typography>
-                      {Object.values(card)[0]}
-                    </Typography>
+                    <Typography>{Object.values(card)[0]}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
@@ -189,13 +188,24 @@ export default function Album() {
         </Container>
 
         {/* New Cards */}
-        <Container sx={{ py: 8, display: 'flex', justifyContent: 'space-between' }} maxWidth="md">
+        <Container
+          sx={{ py: 8, display: "flex", justifyContent: "space-between" }}
+          maxWidth="md"
+        >
           {new_cards.map((new_card, index) => (
-            <Card key={index} sx={{ height: '100%', width: '23%', display: 'flex', flexDirection: 'column' }}>
+            <Card
+              key={index}
+              sx={{
+                height: "100%",
+                width: "23%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <CardMedia
                 component="div"
                 sx={{
-                  pt: '50%',
+                  pt: "50%",
                 }}
                 image={new_card.image}
               />
@@ -207,7 +217,7 @@ export default function Album() {
         </Container>
       </main>
 
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
@@ -220,12 +230,12 @@ export default function Album() {
           Something here to give the footer a purpose!
         </Typography>
         <Typography variant="body2" color="text.secondary" align="center">
-          {'Copyright © '}
+          {"Copyright © "}
           <Link color="inherit" href="https://mui.com/">
             Your Website
-          </Link>{' '}
+          </Link>{" "}
           {new Date().getFullYear()}
-          {'.'}
+          {"."}
         </Typography>
       </Box>
     </ThemeProvider>
