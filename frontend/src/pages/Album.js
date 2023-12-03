@@ -28,9 +28,14 @@ import pregaNews from "./pregaNews.svg";
 import cardiacNews from "./cardiac.svg";
 import diabetic from "./Diabetic.svg";
 import child from "./child.svg";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle, faBaby } from '@fortawesome/free-solid-svg-icons';
-import { green, red } from '@mui/material/colors';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheckCircle,
+  faTimesCircle,
+  faBaby,
+} from "@fortawesome/free-solid-svg-icons";
+import { green, red } from "@mui/material/colors";
+import Footer from "../components/footer";
 
 const PrettoSlider = styled(Slider)(({ theme }) => ({
   color: "#52af77",
@@ -308,10 +313,10 @@ function Album() {
     return (
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
         }}
       >
         <CircularProgress />
@@ -320,12 +325,25 @@ function Album() {
   }
   return (
     <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar></Toolbar>
+      <AppBar position="relative" style={{ marginTop: "20px" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              marginTop: "20px",
+              marginBottom: "20px",
+              borderRadius: "10px",
+              background: "#1976D2",
+              padding: "8px",
+              textAlign: "center",
+            }}
+          >
+            <Typography variant="h4" sx={{ color: "white" }}>
+              INGREDIENTS LIST
+            </Typography>
+          </div>
+        </Toolbar>
       </AppBar>
       <main>
-          
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
             {Array.isArray(cards) && cards.length > 0 ? (
@@ -345,7 +363,7 @@ function Album() {
                         // 16:9
                         pt: "56.25%",
                       }}
-                      image="https://source.unsplash.com/random?wallpapers"
+                      image="https://source.unsplash.com/random?"
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography variant="h5" component="h2">
@@ -393,7 +411,24 @@ function Album() {
             )}
           </Grid>
         </Container>
-
+        <AppBar position="relative" style={{ marginTop: "20px" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              marginTop: "20px",
+              marginBottom: "20px",
+              borderRadius: "10px",
+              background: "#1976D2",
+              padding: "8px",
+              textAlign: "center",
+            }}
+          >
+            <Typography variant="h4" sx={{ color: "white" }}>
+              MACRO-NUTRIENTS
+            </Typography>
+          </div>
+        </Toolbar>
+      </AppBar>
         <Container
           sx={{ py: 8, display: "flex", justifyContent: "space-between" }}
           maxWidth="md"
@@ -427,22 +462,37 @@ function Album() {
             </Card>
           ))}
         </Container>
-      </main>
 
-      {/* -------------------- Reccomendations---------------------------------------------------------- */}
-      {/* -------------------- Reccomendations---------------------------------------------------------- */}
-      {/* -------------------- Reccomendations---------------------------------------------------------- */}
-      {/* -------------------- Reccomendations---------------------------------------------------------- */}
-      {/* -------------------- Reccomendations---------------------------------------------------------- */}
-      {/* -------------------- Reccomendations---------------------------------------------------------- */}
+        {/* -------------------- Reccomendations---------------------------------------------------------- */}
+        {/* -------------------- Reccomendations---------------------------------------------------------- */}
+        {/* -------------------- Reccomendations---------------------------------------------------------- */}
+        {/* -------------------- Reccomendations---------------------------------------------------------- */}
+        {/* -------------------- Reccomendations---------------------------------------------------------- */}
+        {/* -------------------- Reccomendations---------------------------------------------------------- */}
 
-       {/* Section for Pregnancy */}
-       <Box
+        {/* Section for Pregnancy */}
+        <AppBar position="relative" style={{ marginTop: "20px" }}>
+          <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+            <div
+              style={{
+                marginTop: "20px",
+                marginBottom: "20px",
+                borderRadius: "10px",
+                background: "#1976D2",
+                padding: "8px",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="h4" sx={{ color: "white" }}></Typography>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <Card
           sx={{
-            bgcolor: '#f5f5f5',
+            bgcolor: "#ffffff",
             p: 4,
-            transition: 'background-color 1s',
-            margin: '20px 0',
+            transition: "background-color 1s",
+            margin: "20px 0",
           }}
           component="section"
         >
@@ -452,11 +502,11 @@ function Album() {
               <Grid item xs={12} sm={6}>
                 <div
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
                   }}
                 >
                   <Typography
@@ -467,21 +517,21 @@ function Album() {
                       color: conditionStatus.pregnant.recommended
                         ? green[500]
                         : red[500],
-                      fontSize: '28px',
-                      padding: '20px',
-                      transition: 'color 10s, font-size 1s',
-                      fontWeight: 'bold',
-                      marginBottom: '10px',
+                      fontSize: "28px",
+                      padding: "20px",
+                      transition: "color 10s, font-size 1s",
+                      fontWeight: "bold",
+                      marginBottom: "10px",
                     }}
                   >
                     {conditionStatus.pregnant.recommended ? (
                       <FontAwesomeIcon icon={faCheckCircle} />
                     ) : (
                       <FontAwesomeIcon icon={faTimesCircle} />
-                    )}{' '}
+                    )}{" "}
                     {conditionStatus.pregnant.recommended
-                      ? 'Recommended'
-                      : 'Not Recommended'}{' '}
+                      ? "Recommended"
+                      : "Not Recommended"}{" "}
                     for Pregnancy!
                   </Typography>
 
@@ -491,19 +541,19 @@ function Album() {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontWeight: 'bold',
-                          marginBottom: '15px',
-                          fontSize: '18px',
+                          fontWeight: "bold",
+                          marginBottom: "15px",
+                          fontSize: "18px",
                         }}
                       >
                         Reasons:
                       </Typography>
                       <ul
                         sx={{
-                          listStyle: 'none',
+                          listStyle: "none",
                           padding: 0,
                           margin: 0,
-                          textAlign: 'center', // Centering the list
+                          textAlign: "center", // Centering the list
                         }}
                       >
                         {conditionStatus.pregnant.ingredients.map(
@@ -511,9 +561,9 @@ function Album() {
                             <li
                               key={index}
                               sx={{
-                                marginBottom: '10px',
-                                fontSize: '16px',
-                                lineHeight: '1.6',
+                                marginBottom: "10px",
+                                fontSize: "16px",
+                                lineHeight: "1.6",
                               }}
                             >
                               <Typography variant="body1">
@@ -530,13 +580,14 @@ function Album() {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontWeight: 'bold',
-                          marginBottom: '5px',
-                          alignItems: 'center',
+                          fontWeight: "bold",
+                          marginBottom: "5px",
+                          alignItems: "center",
                         }}
                       >
-                        "We've meticulously curated the ingredients for your food
-                        – worry not, as there are no harmful components detected!"
+                        "We've meticulously curated the ingredients for your
+                        food – worry not, as there are no harmful components
+                        detected!"
                       </Typography>
                     </div>
                   )}
@@ -544,8 +595,8 @@ function Album() {
                   <Container
                     sx={{
                       py: 4,
-                      display: 'flex',
-                      justifyContent: 'center',
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                     maxWidth="md"
                   >
@@ -558,399 +609,406 @@ function Album() {
 
               {/* Image on the right */}
               <Grid
-              item
-              xs={12}
-              sm={6}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <CustomIcon
-                src={pregaNews}
-                alt="Pregnant Lady"
-                sx={{ maxWidth: "100%", height: "auto" }}
-              />
-            </Grid>
+                item
+                xs={12}
+                sm={6}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CustomIcon
+                  src={pregaNews}
+                  alt="Pregnant Lady"
+                  sx={{ maxWidth: "100%", height: "auto" }}
+                />
+              </Grid>
             </Grid>
           </Container>
-        </Box>
+        </Card>
 
-      {/* Section for Diabetic */}
-      <Box
-        sx={{
-          bgcolor: "#f5f5f5",
-          p: 4,
-          transition: "background-color 1s",
-          margin: "20px 0",
-        }}
-        component="section"
-      >
-        <Container maxWidth="md">
-          <Grid container spacing={2}>
-            {/* Image on the left */}
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              sx={{ display: "flex", justifyContent: "flex-start" }}
-            >
-              <CustomIcon src={diabetic} alt="Diabetic" />
-            </Grid>
-
-            {/* Text on the right */}
-            <Grid item xs={12} sm={6}>
-              <div
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
+        {/* Section for Diabetic */}
+        <Card
+          sx={{
+            bgcolor: "#ffffff",
+            p: 4,
+            transition: "background-color 1s",
+            margin: "20px 0",
+          }}
+          component="section"
+        >
+          <Container maxWidth="md">
+            <Grid container spacing={2}>
+              {/* Image on the left */}
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                sx={{ display: "flex", justifyContent: "flex-start" }}
               >
-                <Typography
-                  variant="h5"
-                  component="h2"
-                  gutterBottom
+                <CustomIcon src={diabetic} alt="Diabetic" />
+              </Grid>
+
+              {/* Text on the right */}
+              <Grid item xs={12} sm={6}>
+                <div
                   sx={{
-                    color: conditionStatus.diabetic.recommended
-                      ? "green"
-                      : "red",
-                    fontSize: "30px",
-                    padding: "25px",
-                    transition: "color 10s, font-size 1s",
-                    fontWeight: "bold",
-                    marginBottom: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
-                  {conditionStatus.diabetic.recommended ? (
+                  <Typography
+                    variant="h5"
+                    component="h2"
+                    gutterBottom
+                    sx={{
+                      color: conditionStatus.diabetic.recommended
+                        ? "green"
+                        : "red",
+                      fontSize: "30px",
+                      padding: "25px",
+                      transition: "color 10s, font-size 1s",
+                      fontWeight: "bold",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {conditionStatus.diabetic.recommended ? (
                       <FontAwesomeIcon icon={faCheckCircle} />
                     ) : (
                       <FontAwesomeIcon icon={faTimesCircle} />
-                    )}{' '}
-                  {conditionStatus.diabetic.recommended
-                    ? "Recommended"
-                    : "Not Recommended"}{" "}
-                  for Diabetic Individuals!
-                </Typography>
+                    )}{" "}
+                    {conditionStatus.diabetic.recommended
+                      ? "Recommended"
+                      : "Not Recommended"}{" "}
+                    for Diabetic Individuals!
+                  </Typography>
 
-                {/* Displaying the list of ingredients not recommended for Diabetic individuals */}
-                {conditionStatus.diabetic.count > 0 && (
-                  <div>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: "bold",
-                        marginBottom: "5px",
-                        alignContent: "center",
-                      }}
-                    >
-                      Playing it safe with your health! Here's why we're not
-                      recommending:
-                    </Typography>
-                    <ul sx={{ listStyle: "none", padding: 0, margin: 0 }}>
-                      {conditionStatus.diabetic.ingredients.map(
-                        (ingredient, index) => (
-                          <li key={index} sx={{ marginBottom: "5px" }}>
-                            <Typography variant="body1">
-                              {ingredient}
-                            </Typography>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                )}
+                  {/* Displaying the list of ingredients not recommended for Diabetic individuals */}
+                  {conditionStatus.diabetic.count > 0 && (
+                    <div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: "bold",
+                          marginBottom: "5px",
+                          alignContent: "center",
+                        }}
+                      >
+                        Playing it safe with your health! Here's why we're not
+                        recommending:
+                      </Typography>
+                      <ul sx={{ listStyle: "none", padding: 0, margin: 0 }}>
+                        {conditionStatus.diabetic.ingredients.map(
+                          (ingredient, index) => (
+                            <li key={index} sx={{ marginBottom: "5px" }}>
+                              <Typography variant="body1">
+                                {ingredient}
+                              </Typography>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
 
-                {conditionStatus.diabetic.count <= 0 && (
-                  <div>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: "bold",
-                        marginBottom: "5px",
-                        alignContent: "center",
-                      }}
-                    >
-                      "We've meticulously curated the ingredients for your food
-                      – worry not, as there are no harmful components detected!"
-                    </Typography>
-                  </div>
-                )}
-                <Container
-                  sx={{
-                    py: 4,
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  maxWidth="md"
-                >
-                  <Button variant="contained" color="primary" size="large">
-                    Explore More
-                  </Button>
-                </Container>
-              </div>
+                  {conditionStatus.diabetic.count <= 0 && (
+                    <div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: "bold",
+                          marginBottom: "5px",
+                          alignContent: "center",
+                        }}
+                      >
+                        "We've meticulously curated the ingredients for your
+                        food – worry not, as there are no harmful components
+                        detected!"
+                      </Typography>
+                    </div>
+                  )}
+                  <Container
+                    sx={{
+                      py: 4,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                    maxWidth="md"
+                  >
+                    <Button variant="contained" color="primary" size="large">
+                      Explore More
+                    </Button>
+                  </Container>
+                </div>
+              </Grid>
             </Grid>
-          </Grid>
-        </Container>
-      </Box>
+          </Container>
+        </Card>
 
-      {/* Section for Cardiac */}
-      <Box
-        sx={{
-          bgcolor: "#f5f5f5",
-          p: 4,
-          transition: "background-color 1s",
-          margin: "20px 0",
-        }}
-        component="section"
-      >
-        <Container maxWidth="md">
-          <Grid container spacing={2}>
-            {/* Text on the left */}
-            <Grid item xs={12} sm={6}>
-              <div
+        {/* Section for Cardiac */}
+        <Card
+          sx={{
+            bgcolor: "#ffffff",
+            p: 4,
+            transition: "background-color 1s",
+            margin: "20px 0",
+          }}
+          component="section"
+        >
+          <Container maxWidth="md">
+            <Grid container spacing={2}>
+              {/* Text on the left */}
+              <Grid item xs={12} sm={6}>
+                <div
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography
+                    variant="h5"
+                    component="h2"
+                    gutterBottom
+                    sx={{
+                      color: conditionStatus.cardiac.recommended
+                        ? "green"
+                        : "red",
+                      fontSize: "28px",
+                      padding: "20px",
+                      transition: "color 10s, font-size 1s",
+                      fontWeight: "bold",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {conditionStatus.cardiac.recommended ? (
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    ) : (
+                      <FontAwesomeIcon icon={faTimesCircle} />
+                    )}{" "}
+                    {conditionStatus.cardiac.recommended
+                      ? "Recommended"
+                      : "Not Recommended"}{" "}
+                    for Cardiac Patients!
+                  </Typography>
+
+                  {/* Displaying the list of ingredients not recommended for Cardiac patients */}
+                  {conditionStatus.cardiac.count > 0 && (
+                    <div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: "bold",
+                          marginBottom: "15px",
+                          fontSize: "18px",
+                          alignContent: "center",
+                        }}
+                      >
+                        Playing it safe with your health! Here's why we're not
+                        recommending:
+                      </Typography>
+                      <ul
+                        sx={{
+                          listStyle: "none",
+                          padding: 0,
+                          margin: 0,
+                          textAlign: "center", // Centering the list
+                        }}
+                      >
+                        {conditionStatus.cardiac.ingredients.map(
+                          (ingredient, index) => (
+                            <li
+                              key={index}
+                              sx={{
+                                marginBottom: "10px",
+                                fontSize: "16px",
+                                lineHeight: "1.6",
+                              }}
+                            >
+                              <Typography variant="body1">
+                                {ingredient}
+                              </Typography>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                  {conditionStatus.cardiac.count <= 0 && (
+                    <div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: "bold",
+                          marginBottom: "5px",
+                          alignContent: "center",
+                        }}
+                      >
+                        "We've meticulously curated the ingredients for your
+                        food – worry not, as there are no harmful components
+                        detected!"
+                      </Typography>
+                    </div>
+                  )}
+                  <Container
+                    sx={{
+                      py: 4,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                    maxWidth="md"
+                  >
+                    <Button variant="contained" color="primary" size="large">
+                      Explore More
+                    </Button>
+                  </Container>
+                </div>
+              </Grid>
+
+              {/* Image on the right */}
+              <Grid
+                item
+                xs={12}
+                sm={6}
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
                   justifyContent: "center",
-                  textAlign: "center",
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  component="h2"
-                  gutterBottom
-                  sx={{
-                    color: conditionStatus.cardiac.recommended
-                      ? "green"
-                      : "red",
-                    fontSize: "28px",
-                    padding: "20px",
-                    transition: "color 10s, font-size 1s",
-                    fontWeight: "bold",
-                    marginBottom: "10px",
-                  }}
-                >
-                {conditionStatus.cardiac.recommended ? (
-                      <FontAwesomeIcon icon={faCheckCircle} />
-                    ) : (
-                      <FontAwesomeIcon icon={faTimesCircle} />
-                    )}{' '}
-                  {conditionStatus.cardiac.recommended
-                    ? "Recommended"
-                    : "Not Recommended"}{" "}
-                  for Cardiac Patients!
-                </Typography>
-
-                {/* Displaying the list of ingredients not recommended for Cardiac patients */}
-                {conditionStatus.cardiac.count > 0 && (
-                  <div>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: "bold",
-                        marginBottom: "15px",
-                        fontSize: "18px",
-                        alignContent: "center",
-                      }}
-                    >
-                      Playing it safe with your health! Here's why we're not
-                      recommending:
-                    </Typography>
-                    <ul
-                      sx={{
-                        listStyle: "none",
-                        padding: 0,
-                        margin: 0,
-                        textAlign: "center", // Centering the list
-                      }}
-                    >
-                      {conditionStatus.cardiac.ingredients.map(
-                        (ingredient, index) => (
-                          <li
-                            key={index}
-                            sx={{
-                              marginBottom: "10px",
-                              fontSize: "16px",
-                              lineHeight: "1.6",
-                            }}
-                          >
-                            <Typography variant="body1">
-                              {ingredient}
-                            </Typography>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                )}
-                {conditionStatus.cardiac.count <= 0 && (
-                  <div>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: "bold",
-                        marginBottom: "5px",
-                        alignContent: "center",
-                      }}
-                    >
-                      "We've meticulously curated the ingredients for your food
-                      – worry not, as there are no harmful components detected!"
-                    </Typography>
-                  </div>
-                )}
-                <Container
-                  sx={{
-                    py: 4,
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  maxWidth="md"
-                >
-                  <Button variant="contained" color="primary" size="large">
-                    Explore More
-                  </Button>
-                </Container>
-              </div>
-            </Grid>
-
-            {/* Image on the right */}
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <CustomIcon
-                src={cardiacNews}
-                alt="Cardiac"
-                sx={{ maxWidth: "100%", height: "auto" }}
-              />
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* Section for Child */}
-      <Box
-        sx={{
-          bgcolor: "#f5f5f5",
-          p: 4,
-          transition: "background-color 1s",
-          margin: "20px 0",
-        }}
-        component="section"
-      >
-        <Container maxWidth="md">
-          <Grid container spacing={2}>
-            {/* Image on the left */}
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              sx={{ display: "flex", justifyContent: "flex-start" }}
-            >
-              <CustomIcon src={child} alt="Child" />
-            </Grid>
-
-            {/* Text on the right */}
-            <Grid item xs={12} sm={6}>
-              <div
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
                 }}
               >
-                <Typography
-                  variant="h5"
-                  component="h2"
-                  gutterBottom
+                <CustomIcon
+                  src={cardiacNews}
+                  alt="Cardiac"
+                  sx={{ maxWidth: "100%", height: "auto" }}
+                />
+              </Grid>
+            </Grid>
+          </Container>
+        </Card>
+
+        {/* Section for Child */}
+        <Card
+          sx={{
+            bgcolor: "#ffffff",
+            p: 4,
+            transition: "background-color 1s",
+            margin: "20px 0",
+          }}
+          component="section"
+        >
+          <Container maxWidth="md">
+            <Grid container spacing={2}>
+              {/* Image on the left */}
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                sx={{ display: "flex", justifyContent: "flex-start" }}
+              >
+                <CustomIcon src={child} alt="Child" />
+              </Grid>
+
+              {/* Text on the right */}
+              <Grid item xs={12} sm={6}>
+                <div
                   sx={{
-                    color: conditionStatus.child.recommended ? "green" : "red",
-                    fontSize: "30px",
-                    padding: "25px",
-                    transition: "color 10s, font-size 1s",
-                    fontWeight: "bold",
-                    marginBottom: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
-                   {conditionStatus.diabetic.recommended ? (
+                  <Typography
+                    variant="h5"
+                    component="h2"
+                    gutterBottom
+                    sx={{
+                      color: conditionStatus.child.recommended
+                        ? "green"
+                        : "red",
+                      fontSize: "30px",
+                      padding: "25px",
+                      transition: "color 10s, font-size 1s",
+                      fontWeight: "bold",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {conditionStatus.diabetic.recommended ? (
                       <FontAwesomeIcon icon={faCheckCircle} />
                     ) : (
                       <FontAwesomeIcon icon={faTimesCircle} />
-                    )}{' '}
-                  {conditionStatus.child.recommended
-                    ? "Recommended"
-                    : "Not Recommended"}{" "}
-                  for Children!
-                </Typography>
+                    )}{" "}
+                    {conditionStatus.child.recommended
+                      ? "Recommended"
+                      : "Not Recommended"}{" "}
+                    for Children!
+                  </Typography>
 
-                {/* Displaying the list of ingredients not recommended for children */}
-                {conditionStatus.child.count > 0 && (
-                  <div>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: "bold",
-                        marginBottom: "5px",
-                        alignContent: "center",
-                      }}
-                    >
-                      Playing it safe with your health! Here's why we're not
-                      recommending:
-                    </Typography>
-                    <ul sx={{ listStyle: "none", padding: 0, margin: 0 }}>
-                      {conditionStatus.child.ingredients.map(
-                        (ingredient, index) => (
-                          <li key={index} sx={{ marginBottom: "5px" }}>
-                            <Typography variant="body1">
-                              {ingredient}
-                            </Typography>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                )}
-                {conditionStatus.child.count <= 0 && (
-                  <div>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: "bold",
-                        marginBottom: "5px",
-                        alignContent: "center",
-                      }}
-                    >
-                      "We've meticulously curated the ingredients for your food
-                      – worry not, as there are no harmful components detected!"
-                    </Typography>
-                  </div>
-                )}
-                <Container
-                  sx={{
-                    py: 4,
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  maxWidth="md"
-                >
-                  <Button variant="contained" color="primary" size="large">
-                    Explore More
-                  </Button>
-                </Container>
-              </div>
+                  {/* Displaying the list of ingredients not recommended for children */}
+                  {conditionStatus.child.count > 0 && (
+                    <div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: "bold",
+                          marginBottom: "5px",
+                          alignContent: "center",
+                        }}
+                      >
+                        Playing it safe with your health! Here's why we're not
+                        recommending:
+                      </Typography>
+                      <ul sx={{ listStyle: "none", padding: 0, margin: 0 }}>
+                        {conditionStatus.child.ingredients.map(
+                          (ingredient, index) => (
+                            <li key={index} sx={{ marginBottom: "5px" }}>
+                              <Typography variant="body1">
+                                {ingredient}
+                              </Typography>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                  {conditionStatus.child.count <= 0 && (
+                    <div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: "bold",
+                          marginBottom: "5px",
+                          alignContent: "center",
+                        }}
+                      >
+                        "We've meticulously curated the ingredients for your
+                        food – worry not, as there are no harmful components
+                        detected!"
+                      </Typography>
+                    </div>
+                  )}
+                  <Container
+                    sx={{
+                      py: 4,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                    maxWidth="md"
+                  >
+                    <Button variant="contained" color="primary" size="large">
+                      Explore More
+                    </Button>
+                  </Container>
+                </div>
+              </Grid>
             </Grid>
-          </Grid>
-        </Container>
-      </Box>
+          </Container>
+        </Card>
+      </main>
+      <Footer />
     </ThemeProvider>
   );
 }
