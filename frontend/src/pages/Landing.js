@@ -28,12 +28,12 @@ function Landing() {
             <li>We tell you which nutritions are good for you!</li>
           </h2>
 
-          <Link
+          {/* <Link
             to="/start"
             className="link animated fadeInUp delay-1s servicelink"
           >
             Get Started
-          </Link>
+          </Link> */}
         </div>
       </header>
     </Fragment>

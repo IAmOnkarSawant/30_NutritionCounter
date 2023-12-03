@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import TeamSpace from "../components/TeamSpace";
+import HeroImage from "../components/HeroImage";
 
 function Test() {
   const navigate = useNavigate();
@@ -63,39 +65,6 @@ function Test() {
 
   return (
     <div className="App">
-      <div
-        className={`about-section ${showAboutContent ? "show-content" : ""}`}
-      >
-        <div className="instructions-box">
-          <Typography variant="h4" gutterBottom>
-            About
-          </Typography>
-          {showAboutContent && (
-            <Typography variant="body1">
-              This app captures the nutrient contents from the back label of the
-              packaged food item and recommends whether it is consumable based
-              on the age group and health condition of an individual.
-            </Typography>
-          )}
-        </div>
-      </div>
-
-      <div className="image-upload-section">
-        <Typography variant="h4" align="center" gutterBottom>
-          Image Upload
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={handleUpload}>
-              Upload
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
-
       <center>
         <Container className="start-button">
           <Button
@@ -108,6 +77,8 @@ function Test() {
           </Button>
         </Container>
       </center>
+      <HeroImage/>
+      <TeamSpace/>
     </div>
   );
 }

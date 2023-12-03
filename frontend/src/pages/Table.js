@@ -524,7 +524,7 @@ export default function Table() {
                   <InfoCard
                     nutrient={nutrient}
                     value={
-                      tableInfo.noutput ? tableInfo.noutput.percentage : null
+                       tableInfo.noutput.percentage 
                     }
                   />
                 </Grid>
@@ -781,7 +781,7 @@ function InfoCard({ nutrient, value }) {
           {nutrient}
         </Typography>
         <Typography variant="body1" style={{ fontWeight: "bold" }}>{`Value: ${
-          value ? value + "%" : { nutrient } + " percentage not found!"
+          value ? value + "%" : "" + " percentage not found!"
         }`}</Typography>
         {additionalContent && (
           <Typography
@@ -789,7 +789,7 @@ function InfoCard({ nutrient, value }) {
             color={value < 5 || value > 20 ? "error" : "textSecondary"}
           >
             <ul>
-              <li>{additionalContent}</li>
+              <li>{value ? additionalContent: "No information"}</li>
             </ul>
           </Typography>
         )}
