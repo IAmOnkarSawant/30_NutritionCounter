@@ -28,14 +28,12 @@ import pregaNews from "./pregaNews.svg";
 import cardiacNews from "./cardiac.svg";
 import diabetic from "./Diabetic.svg";
 import child from "./child.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheckCircle,
-  faTimesCircle,
-  faBaby,
-} from "@fortawesome/free-solid-svg-icons";
-import { green, red } from "@mui/material/colors";
-
+import foodImage from './food.jpg';
+import Recommended from './Recommended.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faTimesCircle, faBaby } from '@fortawesome/free-solid-svg-icons';
+import { green, red } from '@mui/material/colors';
+import Macro from "./Macro.jpg";
 import Navbar_Album from "../components/Navbar_Album";
 
 const PrettoSlider = styled(Slider)(({ theme }) => ({
@@ -324,16 +322,51 @@ function Album() {
   }
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Navbar_Album />
+      <Navbar_Album sx={{zIndex:100}}/>
       <br />
       <br />
       <br />
       <CssBaseline />
-      <AppBar id="Ing" position="relative">
-        {/* <Toolbar></Toolbar> */}
-        <Typography variant="h4" sx={{ color: "white" }}>
+      <AppBar id="Ing" sx={{
+        position: 'relative', backgroundColor: 'white',
+        height: '350px',
+        marginTop: '20px',
+        backgroundImage: `url(${foodImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#fff',
+        zIndex: 2
+      }}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+          }}
+        />
+
+        <Typography variant="h4" sx={{
+          color: 'white',
+          marginTop: '35px',
+          border: '2px solid white',
+          padding: '10px',
+          fontSize: '60px',
+          fontWeight:'500',
+          fontFamily:"Roboto, Sans-serif",
+          paddingLeft:'30px',
+          paddingRight:'30px',
+          zIndex: 1
+        }}>
           INGREDIENTS
         </Typography>
+
       </AppBar>
       <main>
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -403,23 +436,42 @@ function Album() {
             )}
           </Grid>
         </Container>
-        <AppBar id="Mac" position="relative" style={{ marginTop: "20px" }}>
-          <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-            <div
-              style={{
-                marginTop: "5px",
-                marginBottom: "5px",
-                borderRadius: "10px",
-                background: "#1976D2",
-                padding: "4px",
-                textAlign: "center",
-              }}
-            >
-              <Typography variant="h4" sx={{ color: "white" }}>
+        <AppBar id="Mac" position="relative" style={{ position: 'relative', backgroundColor: 'white',
+        height: '350px',
+        marginTop: '20px',
+        backgroundImage: `url(${Macro})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#fff',
+        zIndex: 2}}>
+          <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+          }}
+        />
+          
+              <Typography variant="h4" sx={{ color: 'white',
+          marginTop: '35px',
+          border: '2px solid white',
+          padding: '10px',
+          fontSize: '60px',
+          fontWeight:'500',
+          fontFamily:"Roboto, Sans-serif",
+          paddingLeft:'30px',
+          paddingRight:'30px',
+          zIndex: 1}}>
                 MACRO-NUTRIENTS
               </Typography>
-            </div>
-          </Toolbar>
+           
         </AppBar>
         <Container
           sx={{ py: 8, display: "flex", justifyContent: "space-between" }}
@@ -463,8 +515,22 @@ function Album() {
         {/* -------------------- Reccomendations---------------------------------------------------------- */}
 
         {/* Section for Pregnancy */}
-        <AppBar id="Recom" position="relative" style={{ marginTop: "20px" }}>
-          <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+        <AppBar id="Recom" style={{
+          position: 'relative', backgroundColor: 'white',
+          height: '350px',
+          marginTop: '20px',
+          backgroundImage: `url(${Recommended})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#fff',
+          zIndex: 2
+         }}>
+
+          {/* <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
             <div
               style={{
                 marginTop: "5px",
@@ -474,12 +540,31 @@ function Album() {
                 padding: "4px",
                 textAlign: "center",
               }}
-            >
-              <Typography variant="h4" sx={{ color: "white" }}>
-                RECOMMENDATIONS
-              </Typography>
-            </div>
-          </Toolbar>
+            > */}
+             <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+          }}
+        />
+              <Typography variant="h4" sx={{ 
+                color: 'white',
+                marginTop: '35px',
+                border: '2px solid white',
+                padding: '10px',
+                fontSize: '60px',
+                fontWeight:'500',
+                fontFamily:"Roboto, Sans-serif",
+                paddingLeft:'30px',
+                paddingRight:'30px',
+                zIndex: 1
+               }}>RECOMMENDATIONS</Typography>
+            {/* </div>
+          </Toolbar> */}
         </AppBar>
         <Card
           sx={{
@@ -1028,6 +1113,7 @@ function Album() {
           </Container>
         </Card>
       </main>
+
     </ThemeProvider>
   );
 }

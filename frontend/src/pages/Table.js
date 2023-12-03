@@ -30,6 +30,10 @@ import "react-circular-progressbar/dist/styles.css";
 import { green } from "@mui/material/colors";
 
 import Navbar from "../components/Navbar";
+import Magni from'./magni.jpg';
+import Ocr from './ocr.jpg';
+import Sugg from './sugg.jpg';
+import Diet from './diet.jpg';
 
 const defaultTheme = createTheme();
 
@@ -316,10 +320,45 @@ export default function Table() {
       <br />
       <br />
       <CssBaseline />
-      <AppBar position="relative" id="AnalyzeSection">
-        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-          <Typography variant="h4" color="inherit">
-            LETS ANALYSE!
+      <AppBar  id="AnalyzeSection" 
+      sx={{
+        position: 'relative', backgroundColor: 'white',
+        height: '350px',
+        marginTop: '20px',
+        backgroundImage: `url(${Magni})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#fff',
+        zIndex: 2, // Set a higher zIndex
+      }}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+          }}
+        />
+        <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Typography variant="h4" color="inherit" sx={{
+            color: 'white',
+            marginTop: '35px',
+            border: '2px solid white',
+            padding: '10px',
+            fontSize: '60px',
+            fontWeight:'500',
+            fontFamily:"Roboto, Sans-serif",
+            paddingLeft:'30px',
+            paddingRight:'30px',
+            zIndex: 1
+          }}>
+            LET'S ANALYSE!
           </Typography>
         </Toolbar>
       </AppBar>
@@ -429,16 +468,47 @@ export default function Table() {
             </Box>
           )}
 
-          <AppBar
-            position="relative"
-            id="OCRSection"
-            style={{ marginTop: "20px" }}
-          >
-            <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-              <Typography variant="h4" color="inherit" sx={{ marginBottom: 2 }}>
+
+          <AppBar   id="OCRSection" style={{
+            position: 'relative', backgroundColor: 'white',
+            height: '350px',
+            marginTop: '20px',
+            backgroundImage: `url(${Ocr})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff',
+            zIndex: 2,
+          }}>
+            <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+          }}
+        />
+            
+              <Typography variant="h4" color="inherit" sx={{
+                 color: 'white',
+                 marginTop: '35px',
+                 border: '2px solid white',
+                 padding: '10px',
+                 fontSize: '60px',
+                 fontWeight:'500',
+                 fontFamily:"Roboto, Sans-serif",
+                 paddingLeft:'30px',
+                 paddingRight:'30px',
+                 zIndex: 1
+              }}>
                 OCR DETECTION MODULE
               </Typography>
-            </Toolbar>
+            
           </AppBar>
 
           {!openDialog && (
@@ -495,26 +565,48 @@ export default function Table() {
             </div>
           )}
 
-          <AppBar
-            position="relative"
-            id="SuggestionSection"
-            style={{ marginTop: "20px" }}
-          >
-            <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-              <div
-                style={{
-                  marginTop: "20px",
-                  marginBottom: "20px",
-                  borderRadius: "10px",
-                  background: "#1976D2",
-                  textAlign: "center",
-                }}
-              >
-                <Typography variant="h4" sx={{ color: "white" }}>
+          <AppBar position="relative" id="SuggestionSection" style={{ 
+            position: 'relative', backgroundColor: 'white',
+            height: '350px',
+            marginTop: '20px',
+            backgroundImage: `url(${Sugg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff',
+            zIndex: 2,
+           }}>
+             <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+          }}
+        />
+            
+              
+                <Typography variant="h4" sx={{ 
+                  color: 'white',
+                  marginTop: '35px',
+                  border: '2px solid white',
+                  padding: '10px',
+                  fontSize: '60px',
+                  fontWeight:'500',
+                  fontFamily:"Roboto, Sans-serif",
+                  paddingLeft:'30px',
+                  paddingRight:'30px',
+                  zIndex: 1
+                 }}>
                   OUR SUGGESTIONS
                 </Typography>
-              </div>
-            </Toolbar>
+              
+  
           </AppBar>
 
           {showInfoCards && (
@@ -533,23 +625,9 @@ export default function Table() {
           )}
 
           {showRecommendation && (
-            <div
-              id="DietPlanSection"
-              ref={recommendationRef}
-              style={{ marginTop: "20px" }}
-            >
-              <div
-                style={{
-                  background: "#1976D2",
-                  padding: "8px",
-                  textAlign: "center",
-                  marginBottom: "20px",
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  sx={{ marginTop: 1, padding: 2, color: "white" }}
-                >
+            <div id="DietPlanSection" ref={recommendationRef} style={{ marginTop: '20px' }}>
+              <div style={{background: '#1976D2', padding: '8px', textAlign: 'center', marginBottom: '20px' , backgroundImage: `url(${Diet})`}}>
+                <Typography variant="h4" sx={{ marginTop: 1, padding: 2, color: 'black' }}>
                   PERSONAL DIET PLAN
                 </Typography>
               </div>
