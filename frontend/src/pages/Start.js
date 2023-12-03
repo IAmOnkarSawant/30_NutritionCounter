@@ -65,7 +65,7 @@ const Start = () => {
 
   const downloadImage = () => {
     if (imageData) {
-      // Pass the destination path based on the selected mode
+      
       const destinationPath = mode === 'ingredients' ? '/album' : '/table';
       handleUpload(destinationPath);
     }

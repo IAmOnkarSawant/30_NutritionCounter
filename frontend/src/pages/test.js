@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import './test.css';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 
 function Test() {
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
   const [file, setFile] = useState(null);
   const [showAboutContent, setShowAboutContent] = useState(false);
 
@@ -21,9 +21,9 @@ function Test() {
     setFile(e.target.files[0]);
   };
 
-  // Updated function to navigate to the Start page
+ 
   const handleNavigateToStart = () => {
-    navigate('/start'); // Navigate to the Start page
+    navigate('/start'); 
   };
 
   const handleUpload = async () => {
@@ -53,7 +53,7 @@ function Test() {
 
       if (response.ok) {
         alert('File uploaded successfully.');
-        handleNavigateToStart(); // Navigate to the Start page after successful upload
+        handleNavigateToStart(); 
       } else {
         alert('Error uploading the file.');
       }
@@ -95,7 +95,6 @@ function Test() {
 
       <center>
       <Container className="start-button">
-        {/* Updated button to trigger the navigation */}
         <Button variant="contained" color="secondary" size="large" onClick={handleNavigateToStart}>
           Let's Start
         </Button>

@@ -75,10 +75,10 @@ const PrettoSlider = styled(Slider)(({ theme }) => ({
       transform: "rotate(45deg)",
     },
   },
-  // Custom transition duration
+  
   "& .MuiSlider-thumb, & .MuiSlider-track": {
     transition: theme.transitions.create(["left", "transform"], {
-      duration: theme.transitions.duration.shortest, // Adjust the duration as needed
+      duration: theme.transitions.duration.shortest, 
     }),
   },
 }));
@@ -102,8 +102,8 @@ function CustomizedSlider() {
   const [sliderValue, setSliderValue] = useState(0);
 
   useEffect(() => {
-    const targetValue = 20; // Set your desired default value
-    const duration = 2000; // Set the duration of the transition in milliseconds
+    const targetValue = 20; 
+    const duration = 2000; 
 
     const startTime = Date.now();
     const updateSlider = () => {
@@ -112,7 +112,7 @@ function CustomizedSlider() {
 
       if (elapsed < duration) {
         const progress = elapsed / duration;
-        const easedProgress = 0.5 - 0.5 * Math.cos(progress * Math.PI); // Apply easing if needed
+        const easedProgress = 0.5 - 0.5 * Math.cos(progress * Math.PI); 
         const newValue = Math.round(targetValue * easedProgress);
         setSliderValue(newValue);
         requestAnimationFrame(updateSlider);
@@ -122,7 +122,7 @@ function CustomizedSlider() {
     };
 
     updateSlider();
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  }, []); 
 
   return (
     <Box sx={{ m: 1 }}>
@@ -156,7 +156,6 @@ const marks = [
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-// image mapping to the slider
 const cards = [{ N1: "Nutrient1" }, { N2: "Nutrient2" }, { N3: "Nutrient3" }];
 const new_cards = [
   { type: "protein", image: proteinImage },
@@ -165,8 +164,8 @@ const new_cards = [
   { type: "carbs", image: carbsImage },
 ];
 const StyledImg = styled("img")({
-  width: "100%", // Adjust the width as needed
-  height: "auto", // Adjust the height as needed
+  width: "100%", 
+  height: "auto", 
   display: "block",
 });
 function CustomIcon({ src, alt, ...props }) {
@@ -216,7 +215,7 @@ function Album() {
   useEffect(() => {
     const fetchConditionStatus = async () => {
       try {
-        // Fetch Pregnancy status
+       
         const responsePregnant = await fetch("/api/home/is-rec-pregnant");
         const dataPregnant = await responsePregnant.json();
         setConditionStatus((prevStatus) => ({
@@ -228,7 +227,7 @@ function Album() {
           },
         }));
 
-        // Fetch Diabetic status
+        
         const responseDiabetic = await fetch("/api/home/is-rec-diabetic");
         const dataDiabetic = await responseDiabetic.json();
         setConditionStatus((prevStatus) => ({
@@ -279,7 +278,6 @@ function Album() {
         const response = await fetch("/api/home/get-top4-nutrients");
         const data = await response.json();
         setTopNutrients(data);
-        // console.log(data.carbs);
         setLoadingTopNutrients(false);
       } catch (error) {
         console.error("Error fetching top nutrients:", error);
@@ -341,7 +339,7 @@ function Album() {
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
             {Array.isArray(cards) && cards.length > 0 ? (
-              // Render cards for each nutrient
+              
               cards.map((card, index) => (
                 <Grid item key={index} xs={12} sm={6} md={4}>
                   <Card
@@ -364,11 +362,11 @@ function Album() {
                         <strong>
                           {!card ? "Un-identified" : card.name[0]}{" "}
                         </strong>
-                        {/* Display the first nutrient name */}
+                       
                       </Typography>
                       <Typography>
                         {generateDescription(card)}{" "}
-                        {/* Generate and display description */}
+                        
                       </Typography>
                     </CardContent>
                   </Card>
@@ -376,7 +374,7 @@ function Album() {
               ))
             ) : (
               <Grid item xs={12} sm={6} md={4}>
-                {/* Display a placeholder image or message for no ingredients */}
+              
                 <Card
                   sx={{
                     height: "100%",
@@ -445,7 +443,7 @@ function Album() {
                 image={new_card.image}
               />
               <CardContent sx={{ flexGrow: 1 }}>
-                {/* Use the state values for the Slider */}
+                
                 <PrettoSlider
                   valueLabelDisplay="auto"
                   aria-label="pretto slider"
@@ -494,7 +492,7 @@ function Album() {
         >
           <Container maxWidth="md">
             <Grid container spacing={2}>
-              {/* Text on the left */}
+              
               <Grid item xs={12} sm={6}>
                 <div
                   sx={{
@@ -531,7 +529,7 @@ function Album() {
                     for Pregnancy!
                   </Typography>
 
-                  {/* Displaying the list of ingredients not recommended for pregnancy */}
+                  
                   {conditionStatus.pregnant.count > 0 && (
                     <div>
                       <Typography
@@ -549,7 +547,7 @@ function Album() {
                           listStyle: "none",
                           padding: 0,
                           margin: 0,
-                          textAlign: "center", // Centering the list
+                          textAlign: "center", 
                         }}
                       >
                         {conditionStatus.pregnant.ingredients.map(
@@ -610,7 +608,7 @@ function Album() {
                 </div>
               </Grid>
 
-              {/* Image on the right */}
+              
               <Grid
                 item
                 xs={12}
@@ -631,7 +629,7 @@ function Album() {
           </Container>
         </Card>
 
-        {/* Section for Diabetic */}
+        
         <Card
           sx={{
             bgcolor: "#ffffff",
@@ -643,7 +641,7 @@ function Album() {
         >
           <Container maxWidth="md">
             <Grid container spacing={2}>
-              {/* Image on the left */}
+             
               <Grid
                 item
                 xs={12}
@@ -653,7 +651,7 @@ function Album() {
                 <CustomIcon src={diabetic} alt="Diabetic" />
               </Grid>
 
-              {/* Text on the right */}
+              
               <Grid item xs={12} sm={6}>
                 <div
                   sx={{
@@ -688,7 +686,7 @@ function Album() {
                     for Diabetic Individuals!
                   </Typography>
 
-                  {/* Displaying the list of ingredients not recommended for Diabetic individuals */}
+                
                   {conditionStatus.diabetic.count > 0 && (
                     <div>
                       <Typography
@@ -768,7 +766,7 @@ function Album() {
         >
           <Container maxWidth="md">
             <Grid container spacing={2}>
-              {/* Text on the left */}
+              
               <Grid item xs={12} sm={6}>
                 <div
                   sx={{
@@ -805,7 +803,7 @@ function Album() {
                     for Cardiac Patients!
                   </Typography>
 
-                  {/* Displaying the list of ingredients not recommended for Cardiac patients */}
+                 
                   {conditionStatus.cardiac.count > 0 && (
                     <div>
                       <Typography
@@ -825,7 +823,7 @@ function Album() {
                           listStyle: "none",
                           padding: 0,
                           margin: 0,
-                          textAlign: "center", // Centering the list
+                          textAlign: "center", 
                         }}
                       >
                         {conditionStatus.cardiac.ingredients.map(
@@ -918,7 +916,7 @@ function Album() {
         >
           <Container maxWidth="md">
             <Grid container spacing={2}>
-              {/* Image on the left */}
+              
               <Grid
                 item
                 xs={12}
@@ -928,7 +926,7 @@ function Album() {
                 <CustomIcon src={child} alt="Child" />
               </Grid>
 
-              {/* Text on the right */}
+              
               <Grid item xs={12} sm={6}>
                 <div
                   sx={{
@@ -963,7 +961,7 @@ function Album() {
                     for Children!
                   </Typography>
 
-                  {/* Displaying the list of ingredients not recommended for children */}
+                  
                   {conditionStatus.child.count > 0 && (
                     <div>
                       <Typography

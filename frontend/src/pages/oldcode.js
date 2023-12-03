@@ -23,7 +23,7 @@ import fibreImage from './fiber.jpg';
 import carbsImage from './carbs.jpg';
 import { useEffect, useState } from 'react';
 
-// Add these lines at the top of your file
+
 const PrettoSlider = styled(Slider)(({ theme }) => ({
   color: '#52af77',
   height: 8,
@@ -61,10 +61,10 @@ const PrettoSlider = styled(Slider)(({ theme }) => ({
       transform: 'rotate(45deg)',
     },
   },
-  // Custom transition duration
+  
   '& .MuiSlider-thumb, & .MuiSlider-track': {
     transition: theme.transitions.create(['left', 'transform'], {
-      duration: theme.transitions.duration.shortest, // Adjust the duration as needed
+      duration: theme.transitions.duration.shortest, 
     }),
   },
 }));
@@ -88,8 +88,8 @@ function CustomizedSlider() {
   const [sliderValue, setSliderValue] = useState(0);
 
   useEffect(() => {
-    const targetValue = 20; // Set your desired default value
-    const duration = 2000; // Set the duration of the transition in milliseconds
+    const targetValue = 20; 
+    const duration = 2000; 
 
     const startTime = Date.now();
     const updateSlider = () => {
@@ -98,7 +98,7 @@ function CustomizedSlider() {
 
       if (elapsed < duration) {
         const progress = elapsed / duration;
-        const easedProgress = 0.5 - 0.5 * Math.cos(progress * Math.PI); // Apply easing if needed
+        const easedProgress = 0.5 - 0.5 * Math.cos(progress * Math.PI);
         const newValue = Math.round(targetValue * easedProgress);
         setSliderValue(newValue);
         requestAnimationFrame(updateSlider);
@@ -108,7 +108,7 @@ function CustomizedSlider() {
     };
 
     updateSlider();
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  }, []); 
 
   return (
     <Box sx={{ m: 1 }}>
@@ -156,7 +156,7 @@ export default function Album() {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          {/* Add any app bar content if needed */}
+          
         </Toolbar>
       </AppBar>
       <main>
@@ -207,7 +207,6 @@ export default function Album() {
         </Container>
       </main>
 
-      {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           Footer

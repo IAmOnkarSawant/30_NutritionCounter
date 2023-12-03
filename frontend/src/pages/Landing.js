@@ -19,7 +19,7 @@ function Landing() {
           <h2 className="we-create animated fadeInUp delay-1s">
             <li>We tell you which nutritions are good for you!</li>
           </h2>
-          {/* Replace the anchor tag with Link */}
+         
           <Link to="/start" className="link animated fadeInUp delay-1s servicelink">
             Get Started
           </Link>

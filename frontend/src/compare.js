@@ -39,7 +39,7 @@ const notRecommendedArray = [
   'Avoid excessive consumption of processed foods.',
   'Reduce the intake of saturated fats and cholesterol.',
 ];
-// Add these lines at the top of your file
+
 const PrettoSlider = styled(Slider)(({ theme }) => ({
   color: '#52af77',
   height: 8,
@@ -77,10 +77,10 @@ const PrettoSlider = styled(Slider)(({ theme }) => ({
       transform: 'rotate(45deg)',
     },
   },
-  // Custom transition duration
+ 
   '& .MuiSlider-thumb, & .MuiSlider-track': {
     transition: theme.transitions.create(['left', 'transform'], {
-      duration: theme.transitions.duration.shortest, // Adjust the duration as needed
+      duration: theme.transitions.duration.shortest, 
     }),
   },
 }));
@@ -104,8 +104,8 @@ function CustomizedSlider() {
   const [sliderValue, setSliderValue] = useState(0);
 
   useEffect(() => {
-    const targetValue = 20; // Set your desired default value
-    const duration = 2000; // Set the duration of the transition in milliseconds
+    const targetValue = 20; 
+    const duration = 2000; 
 
     const startTime = Date.now();
     const updateSlider = () => {
@@ -114,7 +114,7 @@ function CustomizedSlider() {
 
       if (elapsed < duration) {
         const progress = elapsed / duration;
-        const easedProgress = 0.5 - 0.5 * Math.cos(progress * Math.PI); // Apply easing if needed
+        const easedProgress = 0.5 - 0.5 * Math.cos(progress * Math.PI); 
         const newValue = Math.round(targetValue * easedProgress);
         setSliderValue(newValue);
         requestAnimationFrame(updateSlider);
@@ -124,7 +124,7 @@ function CustomizedSlider() {
     };
 
     updateSlider();
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  }, []); 
 
   return (
     <Box sx={{ m: 1 }}>
@@ -155,7 +155,7 @@ const marks = [
   },
 ];
 
-// TODO remove, this demo shouldn't need to reset the theme.
+
 const defaultTheme = createTheme();
 
 const cards = [{ N1: "Nutrient1" }, { N2: "Nutrient2" }, { N3: "Nutrient3" }];
@@ -166,14 +166,13 @@ const new_cards = [
   { Carbohydrates: "Carbohydrates", image: carbsImage },
 ];
 const StyledImg = styled('img')({
-  width: '100%', // Adjust the width as needed
-  height: 'auto', // Adjust the height as needed
+  width: '100%', 
+  height: 'auto', 
   display: 'block',
 });
 function CustomIcon({ src, alt, ...props }) {
   return <StyledImg src={src} alt={alt} {...props} />;
 }
-// ... (your imports)
 
 export default function Album() {
   const flag = 0;
@@ -183,7 +182,6 @@ export default function Album() {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          {/* Add any app bar content if needed */}
         </Toolbar>
       </AppBar>
       <main>
@@ -215,7 +213,7 @@ export default function Album() {
           </Grid>
         </Container>
 
-        {/* New Cards */}
+      
         <Container sx={{ py: 8, display: 'flex', justifyContent: 'space-between' }} maxWidth="md">
           {new_cards.map((new_card, index) => (
             <Card key={index} sx={{ height: '100%', width: '23%', display: 'flex', flexDirection: 'column' }}>
@@ -261,7 +259,7 @@ export default function Album() {
       <Box sx={{ bgcolor: '#f5f5f5', p: 6, transition: 'background-color 1s' }} component="section">
         <Container maxWidth="md">
           <Grid container spacing={2}>
-            {/* Text on the left */}
+            
             <Grid item xs={12} sm={6}>
   <Typography variant="h5" component="h2" gutterBottom sx={{ color: flag === 1 ? 'green' : 'red', fontSize: '35px', padding: '25px', transition: 'color 10s, font-size 1s', fontWeight: 'bold' }}>
     {flag === 1 ? 'Recommended' : 'Not Recommended'} 

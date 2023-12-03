@@ -25,7 +25,7 @@ export default function Navbar_start() {
         <Toolbar>
           <nav style={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}>
             <div>
-              {/* Use Link for navigation to the home ("/") route */}
+             
               <Link to="/" style={{ textDecoration: 'none' }}>
                 <Button
                   variant="outlined"
@@ -37,7 +37,7 @@ export default function Navbar_start() {
               </Link>
               {user && (
                 <div>
-                  {/* Add other buttons for authenticated user if needed */}
+                 
                 </div>
               )}
             </div>

@@ -25,7 +25,7 @@ export default function Navbar_Album() {
         <Toolbar>
           <nav style={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}>
             <div>
-              {/* Home button with Link */}
+              
               <Link to="/" style={{ textDecoration: 'none' }}>
                 <Button
                   variant="outlined"
@@ -37,12 +37,12 @@ export default function Navbar_Album() {
               </Link>
               {user && (
                 <div>
-                  {/* Add other buttons for authenticated user if needed */}
+                 
                 </div>
               )}
             </div>
             <div>
-              {/* Add gap between buttons and push them to the right */}
+             
               <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
                 {user && (
                   <Button
@@ -74,7 +74,7 @@ export default function Navbar_Album() {
                     </Button>
                   </>
                 )}
-                {/* Let's Analyze button */}
+               
                 <Button
                   variant="outlined"
                   color="primary"
