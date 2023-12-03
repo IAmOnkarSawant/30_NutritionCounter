@@ -28,9 +28,13 @@ import pregaNews from "./pregaNews.svg";
 import cardiacNews from "./cardiac.svg";
 import diabetic from "./Diabetic.svg";
 import child from "./child.svg";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle, faBaby } from '@fortawesome/free-solid-svg-icons';
-import { green, red } from '@mui/material/colors';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheckCircle,
+  faTimesCircle,
+  faBaby,
+} from "@fortawesome/free-solid-svg-icons";
+import { green, red } from "@mui/material/colors";
 
 import Navbar_Album from "../components/Navbar_Album";
 
@@ -322,16 +326,16 @@ function Album() {
   }
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Navbar_Album/>
-      <br/>
-      <br/>
-      <br/>
+      <Navbar_Album />
+      <br />
+      <br />
+      <br />
       <CssBaseline />
       <AppBar id="Ing" position="relative">
         {/* <Toolbar></Toolbar> */}
         <Typography variant="h4" sx={{ color: "white" }}>
-              INGREDIENTS
-            </Typography>
+          INGREDIENTS
+        </Typography>
       </AppBar>
       <main>
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -402,23 +406,23 @@ function Album() {
           </Grid>
         </Container>
         <AppBar id="Mac" position="relative" style={{ marginTop: "20px" }}>
-        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-          <div
-            style={{
-              marginTop: "5px",
-              marginBottom: "5px",
-              borderRadius: "10px",
-              background: "#1976D2",
-              padding: "4px",
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="h4" sx={{ color: "white" }}>
-              MACRO-NUTRIENTS
-            </Typography>
-          </div>
-        </Toolbar>
-      </AppBar>
+          <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+            <div
+              style={{
+                marginTop: "5px",
+                marginBottom: "5px",
+                borderRadius: "10px",
+                background: "#1976D2",
+                padding: "4px",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="h4" sx={{ color: "white" }}>
+                MACRO-NUTRIENTS
+              </Typography>
+            </div>
+          </Toolbar>
+        </AppBar>
         <Container
           sx={{ py: 8, display: "flex", justifyContent: "space-between" }}
           maxWidth="md"
@@ -462,19 +466,20 @@ function Album() {
 
         {/* Section for Pregnancy */}
         <AppBar id="Recom" position="relative" style={{ marginTop: "20px" }}>
-       
           <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
             <div
               style={{
                 marginTop: "5px",
-              marginBottom: "5px",
-              borderRadius: "10px",
-              background: "#1976D2",
-              padding: "4px",
-              textAlign: "center",
+                marginBottom: "5px",
+                borderRadius: "10px",
+                background: "#1976D2",
+                padding: "4px",
+                textAlign: "center",
               }}
             >
-              <Typography variant="h4" sx={{ color: "white" }}>RECOMMENDATIONS</Typography>
+              <Typography variant="h4" sx={{ color: "white" }}>
+                RECOMMENDATIONS
+              </Typography>
             </div>
           </Toolbar>
         </AppBar>
@@ -591,9 +596,16 @@ function Album() {
                     }}
                     maxWidth="md"
                   >
-                    <Button variant="contained" color="primary" size="large">
-                      Explore More
-                    </Button>
+                    {/* https://americanpregnancy.org/healthy-pregnancy/pregnancy-health-wellness/foods-to-avoid-during-pregnancy/ */}
+                    <a
+                      href="https://americanpregnancy.org/healthy-pregnancy/pregnancy-health-wellness/foods-to-avoid-during-pregnancy/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="contained" color="primary" size="large">
+                        Explore More
+                      </Button>
+                    </a>
                   </Container>
                 </div>
               </Grid>
@@ -727,10 +739,16 @@ function Album() {
                       justifyContent: "center",
                     }}
                     maxWidth="md"
-                  >
-                    <Button variant="contained" color="primary" size="large">
-                      Explore More
-                    </Button>
+                  >                    
+                  <a
+                      href="https://www.who.int/health-topics/diabetes?gclid=Cj0KCQiA67CrBhC1ARIsACKAa8SXl2WDIngYX_8PZYTkKH3pP9Ta040YxZBDmqUEcoZLtdiSx6SJ3NwaAjoDEALw_wcB#tab=tab_1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="contained" color="primary" size="large">
+                        Explore More
+                      </Button>
+                    </a>
                   </Container>
                 </div>
               </Grid>
@@ -853,9 +871,16 @@ function Album() {
                     }}
                     maxWidth="md"
                   >
-                    <Button variant="contained" color="primary" size="large">
-                      Explore More
-                    </Button>
+                  
+                    <a
+                      href="https://www.nhlbi.nih.gov/health/heart-healthy-living/healthy-foods#:~:text=Foods%20to%20limit,%2C%20added%20sugars%2C%20and%20alcohol."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="contained" color="primary" size="large">
+                        Explore More
+                      </Button>
+                    </a>
                   </Container>
                 </div>
               </Grid>
@@ -989,9 +1014,15 @@ function Album() {
                     }}
                     maxWidth="md"
                   >
-                    <Button variant="contained" color="primary" size="large">
-                      Explore More
-                    </Button>
+                    <a
+                      href="https://www.nhs.uk/conditions/baby/weaning-and-feeding/foods-to-avoid-giving-babies-and-young-children/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="contained" color="primary" size="large">
+                        Explore More
+                      </Button>
+                    </a>
                   </Container>
                 </div>
               </Grid>
@@ -999,7 +1030,6 @@ function Album() {
           </Container>
         </Card>
       </main>
-      
     </ThemeProvider>
   );
 }
