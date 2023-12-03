@@ -8,6 +8,7 @@ import Test from "./pages/test";
 import Album from "./pages/Album";
 import Start from "./pages/Start"; // Import the Start component
 import Table from "./pages/Table";
+import Landing from "./pages/Landing";
 
 function App() {
   const { user } = useAuthContext();
@@ -20,7 +21,7 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route path="/" element={<Test />} />
+            <Route path="/" element={<Landing />} />
             <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
