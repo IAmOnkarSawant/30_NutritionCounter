@@ -2,11 +2,7 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
-import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -14,45 +10,65 @@ export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
 
-  const handleClick = () => {
+  const handleClick = (targetId) => {
     logout();
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: '#590561' }}>
+      <AppBar position="fixed" sx={{ backgroundColor: '#e9e5e3' }}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
-              SSD PROJECT
-          </Link>
-          </Typography>
-          <nav>
-            {user && (
-              <div>
+          <nav style={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              {user && (
                 <div>
-                  <button color="inherit" onClick={handleClick}>Log out</button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                    onClick={() => handleClick("OCRSection")}
+                  >
+                    Log out
+                  </Button>
                 </div>
-              </div>
-            )}
-            {!user && (
-              <div>
-                <Link to="/login">
-                  <button color="inherit" >Login</button>
-                </Link>
-                <Link to="/signup">
-                  <button color="inherit">Signup</button>
-                </Link>
-              </div>
-            )}
+              )}
+              {!user && (
+                <div>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                    onClick={() => handleClick("OCRSection")}
+                  >
+                    OCR MODULE
+                  </Button>
+                  <span style={{ marginLeft: '10px' }}></span>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                    onClick={() => handleClick("SuggestionSection")}
+                  >
+                    OUR SUGGESTIONS
+                  </Button>
+                </div>
+              )}
+            </div>
+            <div>
+              {/* Add Let's Analyze button to the right */}
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                onClick={() => handleClick("AnalyzeSection")}
+              >
+                Let's Analyze
+              </Button>
+            </div>
           </nav>
         </Toolbar>
       </AppBar>

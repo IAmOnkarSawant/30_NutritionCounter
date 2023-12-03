@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import Test from "./pages/test";
 import Album from "./pages/Album";
 import Start from "./pages/Start"; // Import the Start component
@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="pages">
           <Routes>
             <Route path="/" element={<Test />} />
