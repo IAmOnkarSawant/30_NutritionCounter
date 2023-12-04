@@ -616,7 +616,7 @@ export default function Table() {
                   <InfoCard
                     nutrient={nutrient}
                     value={
-                       tableInfo.noutput.percentage 
+                      tableInfo.noutput ? tableInfo.noutput.percentage : null
                     }
                   />
                 </Grid>

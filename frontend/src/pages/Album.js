@@ -382,14 +382,14 @@ function Album() {
                       flexDirection: "column",
                     }}
                   >
-                    <CardMedia
+                    {/* <CardMedia
                       component="div"
                       sx={{
                         // 16:9
                         pt: "56.25%",
                       }}
                       image="https://source.unsplash.com/random?"
-                    />
+                    /> */}
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography variant="h5" component="h2">
                         <strong>
@@ -415,14 +415,14 @@ function Album() {
                     flexDirection: "column",
                   }}
                 >
-                  <CardMedia
+                  {/* <CardMedia
                     component="div"
                     sx={{
                       // 16:9
                       pt: "56.25%",
                     }}
                     image="https://source.unsplash.com/random?no-ingredients"
-                  />
+                  /> */}
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="h5" component="h2" align="center">
                       No Ingredients
