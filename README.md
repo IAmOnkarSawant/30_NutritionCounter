@@ -1,7 +1,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/IAmOnkarSawant/30_NutritionCounter">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="./frontend/public/assets/img/bottlelabel.jpg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Nutrition Counter App</h3>
