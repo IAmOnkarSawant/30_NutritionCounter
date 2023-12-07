@@ -36,7 +36,17 @@ function Test() {
     formData.append('image', file);
 
     try {
-      const response = await fetch('http://localhost:4000/api/upload', {
+      // Fetch nutrient data from your Express server
+      // fetch('/api/home/delete-files')
+      // .then((response) => response.text())
+      // .then((data) => {
+      //   console.log(data);
+      // })
+      // .catch((error) => {
+      //   console.error('Error deleting files:', error);
+      // });
+
+      const response = await fetch('/api/home/upload', {
         method: 'POST',
         body: formData,
       });
@@ -83,12 +93,14 @@ function Test() {
         </Grid>
       </div>
 
+      <center>
       <Container className="start-button">
         {/* Updated button to trigger the navigation */}
         <Button variant="contained" color="secondary" size="large" onClick={handleNavigateToStart}>
           Let's Start
         </Button>
       </Container>
+      </center>
     </div>
   );
 }
