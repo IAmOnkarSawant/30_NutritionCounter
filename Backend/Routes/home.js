@@ -79,28 +79,79 @@ router.get("/run-python-script-table", (req, res) => {
   });
 
   pythonProcess.on("close", (code) => {
+    let response;
     if (code !== 0) {
       console.error(`Error: Python script exited with code ${code}`);
+      const errorOutput = stderr.split("\n").filter(Boolean);
+      response = { success: false, error: `Python script exited with code ${code}`, errorDetails: errorOutput };
+    } else {
+      try {
+        const noutput = JSON.parse(stdout);
+        const errorOutput = stderr.split("\n").filter(Boolean);
+        for (const table_content of noutput) {
+          if (table_content["percentage"] > 20) table_content["DV%"] = "high";
+          else if (table_content["percentage"] >= 5 && table_content["percentage"] <= 20)
+            table_content["DV%"] = "normal";
+          else table_content["DV%"] = "low";
+        }
+        response = { success: true, data: noutput, errorOutput };
+      } catch (e) {
+        console.error(`Error: Failed to parse Python script output - ${e}`);
+        response = { success: false, error: `Failed to parse Python script output`, errorDetails: e.toString() };
+      }
     }
-
-    // Processing the Python script's output and stderr
-    const noutput = JSON.parse(stdout);
-    const errorOutput = stderr.split("\n").filter(Boolean);
-    table_contents = noutput;
-    for (const table_content of table_contents) {
-      if (table_content["percentage"] > 20) table_content["DV%"] = "high";
-      else if (
-        table_content["percentage"] >= 5 &&
-        table_content["percentage"] <= 20
-      )
-        table_content["DV%"] = "normal";
-      else table_content["DV%"] = "low";
-    }
-    res.json({ noutput, errorOutput });
+    res.json(response);
   });
 });
 module.exports = router;
 
+//------------------------------------------------------------
+// Run the model for combined
+//------------------------------------------------------------
+router.get("/run-python-script-combined", (req, res) => {
+  let stdout = "";
+  let stderr = "";
+
+  console.log(__dirname);
+  const pythonScriptPath = path.resolve(__dirname, "combinedModel.py");
+  const pythonScriptCommand = `python "${pythonScriptPath}"`;
+  console.log(pythonScriptCommand);
+  const pythonProcess = exec(pythonScriptCommand);
+
+  pythonProcess.stdout.on("data", (data) => {
+    stdout += data;
+  });
+
+  pythonProcess.stderr.on("data", (data) => {
+    stderr += data;
+  });
+
+  pythonProcess.on("close", (code) => {
+    let response;
+    if (code !== 0) {
+      console.error(`Error: Python script exited with code ${code}`);
+      const errorOutput = stderr.split("\n").filter(Boolean);
+      response = { success: false, error: `Python script exited with code ${code}`, errorDetails: errorOutput };
+    } else {
+      try {
+        const noutput = JSON.parse(stdout);
+        const errorOutput = stderr.split("\n").filter(Boolean);
+        for (const table_content of noutput) {
+          if (table_content["percentage"] > 20) table_content["DV%"] = "high";
+          else if (table_content["percentage"] >= 5 && table_content["percentage"] <= 20)
+            table_content["DV%"] = "normal";
+          else table_content["DV%"] = "low";
+        }
+        response = { success: true, data: noutput, errorOutput };
+      } catch (e) {
+        console.error(`Error: Failed to parse Python script output - ${e}`);
+        response = { success: false, error: `Failed to parse Python script output`, errorDetails: e.toString() };
+      }
+    }
+    res.json(response);
+  });
+});
+module.exports = router;
 //==========================================================================//
 //                       Neutrients Routes                                  //
 //==========================================================================//

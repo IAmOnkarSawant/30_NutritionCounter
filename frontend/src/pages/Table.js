@@ -34,6 +34,7 @@ import Magni from'./magni.jpg';
 import Ocr from './ocr.jpg';
 import Sugg from './sugg.jpg';
 import Diet from './diet.jpg';
+import Chooser from '../components/Chooser';
 
 const defaultTheme = createTheme();
 
@@ -62,6 +63,7 @@ const Calorie_lessThan_1500 = {
   Dinner: "Steak (375),Mashed potatoes (150),Asparagus (75)",
   Total: 1500,
 };
+
 
 const Calorie_lessThan_2000 = {
   Breakfast: "Buttered toast (150),Egg (80),Banana (90),Almonds (170)",
@@ -100,6 +102,11 @@ export default function Table() {
   const [bmiCategory, setBmiCategory] = useState("");
   const [activeSection, setActiveSection] = useState("");
 
+  const [view, setView] = useState('table'); // Default view
+
+  const handleChooseView = (chosenView) => {
+    setView(chosenView);
+  };
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -313,12 +320,21 @@ export default function Table() {
     setShowRecommendation(true);
   };
 
+  
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Navbar />
       <br />
       <br />
       <br />
+      <Chooser onChoose={handleChooseView} />
+      {view === 'album' && (
+        <p></p>
+      )}
+      {view === 'table' && (
+        <p></p>
+      )} 
       <CssBaseline />
       <AppBar  id="AnalyzeSection" 
       sx={{
