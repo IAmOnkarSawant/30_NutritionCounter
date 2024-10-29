@@ -144,5 +144,3 @@ Contributions are what make the open source community such an amazing place to b
 ## Acknowledgements
 
 * [https://github.com/ShaanCoding/]()
-* []()
-* []()
