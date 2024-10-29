@@ -11,7 +11,6 @@ const AlbumTableComponent = () => {
     setView(chosenView);
   };
 
-  // Simplified content rendering based on view
   const renderContent = () => {
     switch (view) {
       case "album":
@@ -23,7 +22,6 @@ const AlbumTableComponent = () => {
     }
   };
 
-  // Choose the Navbar based on the view
   const renderNavbar = () => {
     return view === "album" ? <NavbarAlbum /> : <NavbarTable />;
   };

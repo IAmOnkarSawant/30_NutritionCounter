@@ -30,10 +30,10 @@ import "react-circular-progressbar/dist/styles.css";
 import { green } from "@mui/material/colors";
 
 import Navbar from "../components/Navbar";
-import Magni from'./magni.jpg';
-import Ocr from './ocr.jpg';
-import Sugg from './sugg.jpg';
-import Diet from './diet.jpg';
+import Magni from './Images/magni.jpg';
+import Ocr from './Images/ocr.jpg';
+import Sugg from './Images/sugg.jpg';
+import Diet from './Images/diet.jpg';
 import Chooser from '../components/Chooser';
 
 const defaultTheme = createTheme();
@@ -102,7 +102,7 @@ export default function Table() {
   const [bmiCategory, setBmiCategory] = useState("");
   const [activeSection, setActiveSection] = useState("");
 
-  const [view, setView] = useState('table'); // Default view
+  const [view, setView] = useState('table'); 
 
   const handleChooseView = (chosenView) => {
     setView(chosenView);
@@ -349,7 +349,7 @@ export default function Table() {
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
-        zIndex: 2, // Set a higher zIndex
+        zIndex: 2, 
       }}>
         <Box
           sx={{
@@ -358,7 +358,7 @@ export default function Table() {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', 
           }}
         />
         <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -506,7 +506,7 @@ export default function Table() {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', 
           }}
         />
             
@@ -602,7 +602,7 @@ export default function Table() {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the transparency as needed
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', 
           }}
         />
             

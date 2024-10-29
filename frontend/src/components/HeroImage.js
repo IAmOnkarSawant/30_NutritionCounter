@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "./images/foodwallpaper.jpg";
 
@@ -36,7 +35,7 @@ const HeroImage = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the transparency as needed
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
         }}
       />
 

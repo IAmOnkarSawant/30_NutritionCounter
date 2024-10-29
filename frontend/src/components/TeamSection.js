@@ -9,35 +9,30 @@ import pic2 from "./images/nithin.jpeg";
 import pic3 from "./images/shubham.jpg";
 import pic4 from "./images/rhitesh pic.jpg";
 
-
 const teamMembers = [
   {
     name: "Onkar Sawant",
     role: "Mtech - CSE",
     image: pic1,
-    description:
-      "IIIT Hyderabad",
+    description: "IIIT Hyderabad",
   },
   {
     name: "Nithin Venugopal",
     role: "Mtech - CSE",
     image: pic2,
-    description:
-      "IIIT Hyderabad",
+    description: "IIIT Hyderabad",
   },
   {
     name: "Shubham Jaiswal",
     role: "Mtech - CSE",
     image: pic3,
-    description:
-      "IIIT Hyderabad",
+    description: "IIIT Hyderabad",
   },
   {
     name: "Rhitesh Singh",
     role: "Mtech - CSIS",
     image: pic4,
-    description:
-      "IIIT Hyderabad",
+    description: "IIIT Hyderabad",
   },
 ];
 
@@ -55,7 +50,6 @@ const TeamSection = () => {
       }}
     >
       {/* Overlay */}
-     
 
       <Container maxWidth="md">
         <Typography
@@ -99,7 +93,7 @@ const TeamSection = () => {
               }}
             >
               <img
-                src={member.image} // Make sure to replace with the actual path to the image
+                src={member.image}
                 alt={`Team Member ${index + 1}`}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />

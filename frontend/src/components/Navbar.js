@@ -1,8 +1,8 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Link } from "react-router-dom";
@@ -21,34 +21,40 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 0.5 }}>
-      <AppBar position="fixed" sx={{ backgroundColor: '#e9e5e3' }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "#e9e5e3" }}>
         <Toolbar>
-          <nav style={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}>
+          <nav
+            style={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
             <div>
-             
-              <Link to="/" style={{ textDecoration: 'none' }}>
+              <Link to="/" style={{ textDecoration: "none" }}>
                 <Button
                   variant="outlined"
                   color="primary"
-                  style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                  style={{ border: "1px solid #1976D2", borderRadius: "4px" }}
                 >
                   Home
                 </Button>
               </Link>
-              {user && (
-                <div>
-                 
-                </div>
-              )}
+              {user && <div></div>}
             </div>
             <div>
-              
-              <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  justifyContent: "flex-end",
+                }}
+              >
                 {user && (
                   <Button
                     variant="outlined"
                     color="primary"
-                    style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                    style={{ border: "1px solid #1976D2", borderRadius: "4px" }}
                     onClick={() => handleClick("OCRSection")}
                   >
                     Log out
@@ -59,7 +65,10 @@ export default function Navbar() {
                     <Button
                       variant="outlined"
                       color="primary"
-                      style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                      style={{
+                        border: "1px solid #1976D2",
+                        borderRadius: "4px",
+                      }}
                       onClick={() => handleClick("OCRSection")}
                     >
                       OCR MODULE
@@ -67,18 +76,21 @@ export default function Navbar() {
                     <Button
                       variant="outlined"
                       color="primary"
-                      style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                      style={{
+                        border: "1px solid #1976D2",
+                        borderRadius: "4px",
+                      }}
                       onClick={() => handleClick("SuggestionSection")}
                     >
                       OUR SUGGESTIONS
                     </Button>
                   </>
                 )}
-                
+
                 <Button
                   variant="outlined"
                   color="primary"
-                  style={{ border: '1px solid #1976D2', borderRadius: '4px' }}
+                  style={{ border: "1px solid #1976D2", borderRadius: "4px" }}
                   onClick={() => handleClick("AnalyzeSection")}
                 >
                   Let's Analyze

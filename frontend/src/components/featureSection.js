@@ -15,10 +15,10 @@ const FeaturesSection = () => {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        padding: "80px 16px", // Adjust padding as needed
+        padding: "80px 16px",
         textAlign: "center",
         height: "75vh",
-        overflow: "hidden", // Hide overflow to make sure the overlay covers the entire section
+        overflow: "hidden",
       }}
     >
       <Container maxWidth="md">
@@ -29,8 +29,8 @@ const FeaturesSection = () => {
             fontSize: "2.5rem",
             fontWeight: "bold",
             position: "relative",
-            color: "#000", // White text color
-            zIndex: 1, // Keep text above the overlay
+            color: "#000",
+            zIndex: 1,
           }}
         >
           Key Features
@@ -42,25 +42,24 @@ const FeaturesSection = () => {
           justifyContent: "space-around",
           gap: "20px",
           marginTop: "120px",
-          zIndex: 1, // Keep cards above the overlay
+          zIndex: 1,
         }}
       >
         {/* Feature Card 1 */}
         <Card
           sx={{
-            width: 300, // Set a fixed width
+            width: 300,
             height: "auto",
             marginBottom: 2,
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)", // Default shadow
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
             transition: "box-shadow 0.3s, transform 0.3s",
             "&:hover": {
-              boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.2)", // Enhanced shadow on hover
-              transform: "translateY(-5px)", // Lift up effect
+              boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.2)",
+              transform: "translateY(-5px)",
             },
           }}
         >
           <CardContent sx={{ padding: "20px" }}>
-            {/* Adjusted inner padding */}
             <Typography variant="h6" gutterBottom>
               Macro-Nutrients Composition
             </Typography>
@@ -74,7 +73,7 @@ const FeaturesSection = () => {
         {/* Feature Card 2 */}
         <Card
           sx={{
-            width: 300, // Set a fixed width
+            width: 300,
             height: "auto",
             marginBottom: 2,
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
@@ -99,7 +98,7 @@ const FeaturesSection = () => {
         {/* Feature Card 3 */}
         <Card
           sx={{
-            width: 300, // Set a fixed width
+            width: 300,
             height: "auto",
             marginBottom: 2,
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
@@ -124,7 +123,7 @@ const FeaturesSection = () => {
         {/* Feature Card 4 */}
         <Card
           sx={{
-            width: 300, // Set a fixed width
+            width: 300,
             height: "auto",
             marginBottom: 2,
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",

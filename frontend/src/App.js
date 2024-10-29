@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
-import Test from "./pages/test";
+// import Test from "./pages/test";
 import Album from "./pages/Album";
 import Start from "./pages/Start";
 import Table from "./pages/Table";
@@ -12,7 +12,7 @@ import HeroImage from "./components/HeroImage";
 import AboutSection from "./components/AboutSection";
 import FeaturesSection from "./components/featureSection";
 import TeamSection from "./components/TeamSection.js";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 // import Landing from "./pages/Landing";
 
 function App() {
@@ -48,7 +48,6 @@ function App() {
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
             <Route path="/album" element={<Album />} />
-
             <Route path="/start" element={<Start />} />
             <Route path="/table" element={<Table />} />
           </Routes>

@@ -3,21 +3,21 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import { useLogout } from "../hooks/useLogout";
-import { useAuthContext } from "../hooks/useAuthContext";
+// import { useLogout } from "../hooks/useLogout";
+// import { useAuthContext } from "../hooks/useAuthContext";
 import { Link } from "react-router-dom";
 
 export default function Navbar_start() {
-  const { logout } = useLogout();
-  const { user } = useAuthContext();
+  // const { logout } = useLogout();
+  // const { user } = useAuthContext();
 
-  const handleClick = (targetId) => {
-    logout();
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // const handleClick = (targetId) => {
+  //   logout();
+  //   const element = document.getElementById(targetId);
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
