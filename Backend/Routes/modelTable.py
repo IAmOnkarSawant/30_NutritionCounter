@@ -29,7 +29,7 @@ def extract_values(item):
 
     return result
 
-folder_path = os.path.abspath('uploads')  # Use an absolute path
+folder_path = os.path.abspath('uploads')  
 
 file_name = ''
 if os.path.exists(folder_path):
@@ -44,7 +44,6 @@ if os.path.exists(folder_path):
 else:
     print(f"The folder '{folder_path}' does not exist.")
 
-# Construct the full path to the image file
 image_path = os.path.join(folder_path, file_name)
 
 if os.path.isfile(image_path):

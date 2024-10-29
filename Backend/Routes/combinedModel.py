@@ -10,30 +10,23 @@ ollama = Ollama(base_url='http://localhost:11434', model="mistral")
 
 def parse_model_output(model_output):
     try:
-        # Parse the input string as JSON
         data = json.loads(model_output)
 
-        # Initialize the output JSON structure
         parsed_output = {
             "ingredients_list": [],
             "nutrition_facts": {}
         }
 
-        # Process 'ingredients_list'
         if isinstance(data.get("ingredients_list"), list):
             for item in data["ingredients_list"]:
-                # If the item contains a comma, split it into multiple items
                 if ',' in item:
                     parsed_output["ingredients_list"].extend([ingredient.strip() for ingredient in item.split(",")])
                 else:
                     parsed_output["ingredients_list"].append(item)
         elif isinstance(data.get("ingredients_list"), str) and data.get("ingredients_list"):
-            # Handle the case where 'ingredients_list' is a non-empty string
             parsed_output["ingredients_list"] = [data["ingredients_list"]]
 
-        # Process 'nutrition_facts'
         for key, value in data.get("nutrition_facts", {}).items():
-            # Simply assign the value as is, no special processing needed here
             parsed_output["nutrition_facts"][key] = value
 
         return parsed_output
