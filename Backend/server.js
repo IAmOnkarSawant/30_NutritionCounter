@@ -22,7 +22,7 @@ app.use("/api/user", userRoutes);
 
 //mongoose connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/SSD_PROJECT", {
+  .connect(process.env.MONGO_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
