@@ -13,6 +13,9 @@
     <a href="https://github.com/IAmOnkarSawant/30_NutritionCounter"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
+    <a href="https://youtu.be/3BRbxjqm4Q0?si=FiwKPTmoJvNohjvc"><strong> Watch Demo 🚀 </strong> </a>
+    <br/>
+    <br/>
   </p>
 </p>
 
